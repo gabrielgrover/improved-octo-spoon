@@ -1,0 +1,21 @@
+.ThoughtsContainer {
+	padding: 0 2em;
+	height: 100vh;
+}
+
+.ThoughtTile {
+	width: 100%;
+	padding: 16px 0;
+}
+
+.LinkText {
+	text-decoration: underline;
+	margin-bottom: 16px;
+	font-family: MaisonNeue-Medium;
+}
+
+.Description {
+	font-style: italic;	
+	margin-top: 8px;
+}
+

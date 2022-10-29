@@ -1,0 +1,21 @@
+.MyNav {
+	width: 100%;
+	height: 40px;
+	padding: 2em;
+}
+
+.NavbarItemContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	list-style: none;
+}
+
+.NavbarItem {
+	padding-right: 8px;
+	font-family: MaisonNeue-Medium;
+}
+
+.underline {
+	text-decoration: underline;	
+}
