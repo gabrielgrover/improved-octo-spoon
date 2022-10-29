@@ -2,7 +2,7 @@
 
 ### Introduction
 
-Greetings!  Welcome to my small corner of the great void.  My name is Gabriel.  I am a software engineer. Right now my work involves a lot of TypeScript, but I know several languages.  A few weeks ago an old friend of mine asked if he could come by my house with some beers and get advice from me on how to break into the tech industry.  I told him as long as he brought `Miller Lite` then I would oblige him.  It was a long conversation, but one of the things I suggested to him was that he should make a portfolio site to showcase his knowledge and projects.  As soon as I suggested that to him I realized I did not have one myself.  In fact I have never had one.  That suggestion is just something I have heard repeated over the years.  So, I have decided to do the brave thing and follow my own / everyone else's advice!  So welcome to my very own bonified `void log`.
+Greetings!  Welcome to my small corner of the great void.  My name is Gabriel.  I am a software engineer. Right now my work involves a lot of TypeScript, but I know several languages.  A few weeks ago an old friend of mine asked if he could come by my house with some beers and get advice from me on how to break into the tech industry.  I told him as long as he brought `Miller Lite` then I would oblige him.  It was a long conversation, but one of the things I suggested to him was that he should make a portfolio site to showcase his knowledge and projects.  As soon as I suggested that to him I realized I did not have one myself.  In fact I have never had one.  That suggestion is just something I have heard repeated over the years.  So, I have decided to do the brave thing and follow my own advice!  Welcome to my very own bonified `void log`.
 
 
 ### Goal(s)

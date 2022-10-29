@@ -8,7 +8,7 @@ const Thoughts = async () => {
 
   return (
     <div className={styles.ThoughtsContainer}>
-      <PageHeading text="My thoughts" />
+      <PageHeading>My thoughts</PageHeading>
       {blogs.map((blog, idx) => (
         <ThoughtTile
           key={idx}

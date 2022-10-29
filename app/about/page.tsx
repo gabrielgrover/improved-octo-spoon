@@ -8,7 +8,7 @@ const About = async () => {
 
   return (
     <>
-      <PageHeading text="Void log 0" />
+      <PageHeading>Void log 0</PageHeading>
       <Blog html={blog_html} />
     </>
   );

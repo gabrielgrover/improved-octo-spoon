@@ -1,11 +1,14 @@
 "use client";
+
 import React from "react";
 import produce from "immer";
 
-/*This code was shamelessly ripped off from Ben Awad.  The void thanks you Ben!!!*/
+import styles from "./gameoflife.module.css";
 
-const numRows = 50;
-const numCols = 50;
+/*Most of this code was shamelessly ripped off from Ben Awad.  The void thanks you Ben!!!*/
+
+const numRows = 25;
+const numCols = 25;
 
 const operations = [
   [0, 1],
@@ -32,9 +35,13 @@ export const GameOfLife: React.FC = () => {
     return generateEmptyGrid();
   });
 
+  const [extinct, set_extinct] = React.useState(false);
+
   const runSimulation = React.useCallback(() => {
     setGrid((g) => {
-      return produce(g, (gridCopy) => {
+      let all_dead = true;
+
+      const new_grid = produce(g, (gridCopy) => {
         for (let i = 0; i < numRows; i++) {
           for (let k = 0; k < numCols; k++) {
             let neighbors = 0;
@@ -51,9 +58,19 @@ export const GameOfLife: React.FC = () => {
             } else if (g[i][k] === 0 && neighbors === 3) {
               gridCopy[i][k] = 1;
             }
+
+            if (gridCopy[i][k] === 1) {
+              all_dead = false;
+            }
           }
         }
       });
+
+      if (all_dead) {
+        set_extinct(true);
+      }
+
+      return new_grid;
     });
 
     setTimeout(runSimulation, 100);
@@ -61,19 +78,11 @@ export const GameOfLife: React.FC = () => {
 
   React.useEffect(() => {
     if (setGrid) {
-      const rows = [];
-      for (let i = 0; i < numRows; i++) {
-        rows.push(
-          Array.from(Array(numCols), () => (Math.random() > 0.7 ? 1 : 0))
-        );
-      }
-
-      setGrid(rows);
+      setGrid(rand_pop());
     }
   }, [setGrid]);
 
   React.useEffect(() => {
-    console.log({ grid, runSimulation });
     if (grid.length) {
       runSimulation?.();
     }
@@ -92,9 +101,16 @@ export const GameOfLife: React.FC = () => {
             <div
               key={`${i}-${k}`}
               onClick={() => {
-                const newGrid = produce(grid, (gridCopy) => {
-                  gridCopy[i][k] = grid[i][k] ? 0 : 1;
-                });
+                const newGrid = extinct
+                  ? rand_pop()
+                  : produce(grid, (gridCopy) => {
+                      gridCopy[i][k] = grid[i][k] ? 0 : 1;
+                    });
+
+                if (extinct) {
+                  set_extinct(false);
+                }
+
                 setGrid(newGrid);
               }}
               style={{
@@ -107,6 +123,21 @@ export const GameOfLife: React.FC = () => {
           ))
         )}
       </div>
+      {extinct && (
+        <div className={styles.cta_text}>
+          A mass extinction event has occurred. Experiment complete. Use grid
+          for Dial-a-view&trade;
+        </div>
+      )}
     </>
   );
 };
+
+function rand_pop() {
+  const rows = [];
+  for (let i = 0; i < numRows; i++) {
+    rows.push(Array.from(Array(numCols), () => (Math.random() > 0.7 ? 1 : 0)));
+  }
+
+  return rows;
+}

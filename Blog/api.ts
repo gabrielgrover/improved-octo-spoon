@@ -1,6 +1,6 @@
 import { readFile, readdir } from "fs/promises";
 import { BlogMeta } from "./types";
-import { load_mark_down_html } from "../utils";
+import { load_mark_down_html } from "./mark_down_loader";
 
 const BLOGS_DIR = "Blog/blogs";
 
