@@ -4,11 +4,13 @@ import highlightjs from "markdown-it-highlightjs";
 //@ts-ignore
 import image_size_plugin from "markdown-it-imsize";
 import color_plugin from "markdown-it-color";
+import markdown_it_attrs from "markdown-it-attrs";
 
 const md = markdownIt()
   .use(highlightjs)
   .use(image_size_plugin)
-  .use(color_plugin, { inline: true });
+  .use(color_plugin, { inline: true })
+  .use(markdown_it_attrs);
 
 const load_mark_down_file = (path: string) =>
   readFile(path)

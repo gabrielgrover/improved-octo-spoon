@@ -2,6 +2,9 @@ html,
 body {
   font-family: MaisonNeue, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
+	background: #222;
+	color: wheat;
 }
 
 a {
@@ -55,6 +58,16 @@ Fonts
 /*
 Date: 17.V.2011
 Author: pumbur <pumbur@pumbur.net>
+*/
+
+/*
+.hljs {
+  background: white;
+  color: #aaa;
+	display: inline-block;
+	padding: 8px;
+	border-radius: 10px;
+}
 */
 
 .hljs {

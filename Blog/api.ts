@@ -5,7 +5,7 @@ import { load_mark_down_html } from "./mark_down_loader";
 export const BLOGS_DIR = "Blog/blogs";
 
 export function load_blog_html(blog_id: string) {
-  const path_to_blog = `Blog/blogs/blog_${blog_id}/blog.md`;
+  const path_to_blog = `${BLOGS_DIR}/blog_${blog_id}/blog.md`;
 
   const html = load_mark_down_html(path_to_blog);
 

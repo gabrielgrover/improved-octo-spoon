@@ -848,6 +848,13 @@
   resolved "https://registry.yarnpkg.com/@types/linkify-it/-/linkify-it-3.0.2.tgz#fd2cd2edbaa7eaac7e7f3c1748b52a19143846c9"
   integrity sha512-HZQYqbiFVWufzCwexrvh694SOim8z2d+xJl5UNamcvQFejLY/2YUtzXHYi3cHdI7PMlS8ejH2slRAOJQ32aNbA==
 
+"@types/markdown-it-attrs@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@types/markdown-it-attrs/-/markdown-it-attrs-4.1.0.tgz#41c7344f99f3984c370e47af5455a7be6645a108"
+  integrity sha512-ILGUUJf7gydzxY3FrN2XwFT/f6rfxtkXZal478Jf4vqFn2AkQCwGCTx3TI+IPT+5ipOf+hUplem8wfVuCyK/Pw==
+  dependencies:
+    "@types/markdown-it" "*"
+
 "@types/markdown-it-highlightjs@^3.3.1":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@types/markdown-it-highlightjs/-/markdown-it-highlightjs-3.3.1.tgz#1e051211e7754ba478449fea7faeab3d177ca892"
@@ -3191,6 +3198,11 @@ makeerror@1.0.12:
   integrity sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==
   dependencies:
     tmpl "1.0.5"
+
+markdown-it-attrs@^4.1.4:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/markdown-it-attrs/-/markdown-it-attrs-4.1.4.tgz#25c86055affbc1cb9c4605a86aa26495efa16ec7"
+  integrity sha512-53Zfv8PTb6rlVFDlD106xcZHKBSsRZKJ2IW/rTxEJBEVbVaoxaNsmRkG0HXfbHl2SK8kaxZ2QKqdthWy/QBwmA==
 
 markdown-it-color@^2.1.1:
   version "2.1.1"
