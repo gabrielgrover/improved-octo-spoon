@@ -2,7 +2,7 @@ import { readFile, readdir } from "fs/promises";
 import { BlogMeta } from "./types";
 import { load_mark_down_html } from "./mark_down_loader";
 
-const BLOGS_DIR = "Blog/blogs";
+export const BLOGS_DIR = "Blog/blogs";
 
 export function load_blog_html(blog_id: string) {
   const path_to_blog = `Blog/blogs/blog_${blog_id}/blog.md`;

@@ -1,9 +1,8 @@
 import { load_blog_html, Blog } from "../../../Blog";
 
 type Props = {
-  params: {
-    slug: string;
-  };
+  params: { slug: string };
+  searchParams: { id: string };
 };
 
 const BlogPage = async (props: Props) => {
