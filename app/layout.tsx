@@ -1,5 +1,7 @@
+"use client";
 import "./globals.css";
 import { Navbar } from "./Navbar/Navbar";
+import { ThemeProvider } from "../Providers";
 
 export default function RootLayout({
   children,
@@ -16,8 +18,10 @@ export default function RootLayout({
       </head>
 
       <body>
-        <Navbar />
-        {children}
+        <ThemeProvider>
+          <Navbar />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

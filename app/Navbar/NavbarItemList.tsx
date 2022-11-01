@@ -1,7 +1,9 @@
 "use client";
 
+import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { ThemeContext } from "../../Providers";
 import styles from "./navbar.module.css";
 
 type TabnameRouteTuple = {
@@ -9,10 +11,13 @@ type TabnameRouteTuple = {
   route: string;
 };
 
+const useTheme = () => React.useContext(ThemeContext);
+
 export function NavbarItemList(props: {
   tabname_route_tuples: TabnameRouteTuple[];
 }) {
   const pathname = usePathname();
+  const { toggle_theme } = useTheme();
 
   return (
     <>
@@ -25,6 +30,9 @@ export function NavbarItemList(props: {
           </Link>
         </li>
       ))}
+      <li onClick={toggle_theme} className={styles.switch}>
+        Switch
+      </li>
     </>
   );
 }

@@ -19,3 +19,9 @@
 .underline {
 	text-decoration: underline;	
 }
+
+.switch {
+	padding-right: 8px;
+	font-family: MaisonNeue-Medium;
+	cursor: pointer;
+}

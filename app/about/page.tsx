@@ -1,5 +1,4 @@
 import { Blog, load_blog_html } from "../../Blog";
-import styles from "./styles.module.css";
 import { PageHeading } from "../PageHeading";
 import { Constants } from "../../utils";
 
