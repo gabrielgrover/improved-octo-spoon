@@ -15,7 +15,7 @@ I stand on the shoulders of giants.  Here are the npm packages I needed for this
 
 The `markdown-it` package is the package I am using to parse markdown into html so it can be rendered on a NextJS page.  The rest of the packages are plugins for `markdown-it`.  My favorite, and the most useful for me, is `markdown-it-highlightjs`.  This will allow me to render code blocks, which will be demonstrated in due time.  
 
-## Directory structure {#directory-structure}
+## Blog Directory structure {#directory-structure}
 
 Here is the shape of the directory that contains my markdown files.
 
@@ -166,7 +166,7 @@ import { ThoughtTile } from "./ThoughtTile";
 import { PageHeading } from "../PageHeading";
 
 const Thoughts = async () => {
-  const blogs = await list_blogs();
+  const blogs = await list_blogs(); // <--- this returns a BlogMeta[]
 
   return (
     <div className={styles.ThoughtsContainer}>
@@ -187,12 +187,37 @@ const Thoughts = async () => {
 export default Thoughts;
 ```
 
-This is the first example of my favorite new NextJS feature.
+This is the first example of my favorite new NextJS feature.  Notice the call to `list_blogs`.  Since this component is under the `app` directory `NextJS` assumes it is a server component.  This gives the ability to `await` a async function call in the body of a function component.  Before we would have to probably export a `getStaticProps` function if we were using NextJS, and if we were using a client side frame work we would need to use a mixture of `React.useEffect` and `React.useState`. Another important thing to notice/remember is that `list_blogs` is reading the filesystem on the `server`.  In `NextJS` we can now seemlessly write logic that fetches data on the server.  Again, no need for `getStaticProps`.  The logic can happen inside the function component definition.  In this case, the definition of the `Thoughts` component.    
 
+The `ThoughtTile` component in the above code is where the link to than actual blog page is handled.  
+
+```typescript
+import Link from "next/link";
+import styles from "./styles.module.css";
+
+type Props = {
+  title: string;
+  description: string;
+  url_path: string;
+  entry_date: number;
+};
+
+export function ThoughtTile(props: Props) {
+  return (
+    <div className={styles.ThoughtTile}>
+      <Link className={styles.LinkText} href={props.url_path}>
+        {props.title}
+      </Link>
+      <div className={styles.Description}>{props.description}</div>
+      <div>{new Date(props.entry_date).toDateString()}</div>
+    </div>
+  );
+}
+```
 
 ## Blog page 
 
-Here is where my blog page is located in the project directory 
+In order to have a dynamic blog page we set up the directory like this. 
 
 ```
 app
@@ -202,4 +227,26 @@ app
        └── styles.module.css
 ```
 
+When we use a sub directory named `[slug]` we can use routes like `/blog/1`, and the value `1` will show up in the props of the blog page component.
 
+```typescript
+import { load_blog_html, Blog } from "../../../Blog";
+
+type Props = {
+  params: { slug: string };
+  searchParams: { id: string };
+};
+
+const BlogPage = async (props: Props) => {
+  const blog_id = props.params.slug; //<--- Slug here
+  const html = await load_blog_html(blog_id);
+
+  return <Blog html={html} />;
+};
+
+export default BlogPage;
+```
+
+## Conclusion
+
+I hope you were able to follow how I was ablt to get NextJS to render markdown files that are stored on the server's file system.   
