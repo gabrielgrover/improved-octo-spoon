@@ -12,4 +12,4 @@ const BlogPage = async (props: Props) => {
   return <Blog html={html} />;
 };
 
-export default BlogPage;
+export default BlogPage as unknown as React.FC;
