@@ -249,4 +249,4 @@ export default BlogPage;
 
 ## Conclusion
 
-I hope you were able to follow how I was ablt to get NextJS to render markdown files that are stored on the server's file system.   
+I hope this `void log` was able to show you how to render markdown files that are stored locally on the server.   
