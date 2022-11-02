@@ -36,6 +36,8 @@ export const ThemeProvider: React.FC<React.PropsWithChildren> = (props) => {
 
     if (cached_theme) {
       set_theme(cached_theme as "light" | "dark");
+    } else {
+      set_theme("light");
     }
   }, []);
 
