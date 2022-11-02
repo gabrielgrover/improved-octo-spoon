@@ -24,19 +24,7 @@ export const ThemeProvider: React.FC<React.PropsWithChildren> = (props) => {
     });
 
   React.useEffect(() => {
-    if (theme === "light") {
-      document.body.style.setProperty(
-        "background",
-        "var(--light-theme-bg-color)"
-      );
-      document.body.style.setProperty("color", "var(--light-theme-color)");
-    } else {
-      document.body.style.setProperty(
-        "background",
-        "var(--dark-theme-bg-color)"
-      );
-      document.body.style.setProperty("color", "var(--dark-theme-color)");
-    }
+    document.body.dataset.theme = theme;
   }, [theme]);
 
   return (
