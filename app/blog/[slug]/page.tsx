@@ -1,16 +1,14 @@
-import { load_blog_html, Blog } from "../../../Blog";
-import { NextPage } from "next";
+import { Blog } from "../../../Blog";
 
 type Props = {
   params: { slug: string };
   searchParams: { id: string };
 };
 
-const BlogPage = async (props: Props) => {
+const BlogPage = (props: any) => {
   const blog_id = props.params.slug;
-  const html = await load_blog_html(blog_id);
 
-  return <Blog html={html} />;
+  return <Blog id={blog_id} />;
 };
 
-export default BlogPage as unknown as any;
+export default BlogPage;

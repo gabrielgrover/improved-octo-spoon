@@ -1,14 +1,14 @@
-import { Blog, load_blog_html } from "../../Blog";
+import { Blog } from "../../Blog";
 import { PageHeading } from "../components";
 import { Constants } from "../../utils";
 
-const About = async () => {
-  const blog_html = await load_blog_html(String(Constants.ABOUT_ME_BLOG_ID));
+const About = () => {
+  //const blog_html = await load_blog_html(String(Constants.ABOUT_ME_BLOG_ID));
 
   return (
     <>
       <PageHeading>Void log 0</PageHeading>
-      <Blog html={blog_html} />
+      <Blog id={String(Constants.ABOUT_ME_BLOG_ID)} />
     </>
   );
 };
