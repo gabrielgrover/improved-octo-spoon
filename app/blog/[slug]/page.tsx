@@ -1,4 +1,5 @@
 import { load_blog_html, Blog } from "../../../Blog";
+import { NextPage } from "next";
 
 type Props = {
   params: { slug: string };
@@ -12,4 +13,4 @@ const BlogPage = async (props: Props) => {
   return <Blog html={html} />;
 };
 
-export default BlogPage as unknown as React.FC;
+export default BlogPage as unknown as any;

@@ -3,7 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { ThemeContext } from "../../Providers";
+import { ThemeContext } from "../../../Providers";
 import styles from "./navbar.module.css";
 
 type TabnameRouteTuple = {

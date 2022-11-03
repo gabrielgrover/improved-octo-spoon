@@ -2,13 +2,14 @@
 
 import React from "react";
 import produce from "immer";
+import { exists } from "../../../utils/exists";
 
 import styles from "./gameoflife.module.css";
 
-/*Most of this code was shamelessly ripped off from Ben Awad.  The void thanks you Ben!!!*/
+/*This code was shamelessly based off of work done by Ben Awad.  The void thanks you Ben!!!*/
 
-const numRows = 25;
-const numCols = 25;
+const NUM_COLS_CSS_VAR = "--numCols";
+const NUM_ROWS_CSS_VAR = "--numRows";
 
 const operations = [
   [0, 1],
@@ -21,34 +22,36 @@ const operations = [
   [-1, 0],
 ];
 
-const generateEmptyGrid = () => {
-  const rows = [];
-  for (let i = 0; i < numRows; i++) {
-    rows.push(Array.from(Array(numCols), () => 0));
-  }
-
-  return rows;
-};
-
 export const GameOfLife: React.FC = () => {
-  const [grid, setGrid] = React.useState(() => {
-    return generateEmptyGrid();
-  });
+  const [grid, setGrid] = React.useState<number[][]>([]);
+  const [num_of_cols, set_num_of_cols] = React.useState<number>(0);
+  const [num_of_rows, set_num_of_rows] = React.useState<number>(0);
+
+  const ref = React.createRef<HTMLDivElement>();
 
   const [extinct, set_extinct] = React.useState(false);
 
   const runSimulation = React.useCallback(() => {
+    if (!num_of_rows || !num_of_cols) {
+      return;
+    }
+
     setGrid((g) => {
       let all_dead = true;
 
       const new_grid = produce(g, (gridCopy) => {
-        for (let i = 0; i < numRows; i++) {
-          for (let k = 0; k < numCols; k++) {
+        for (let i = 0; i < num_of_rows; i++) {
+          for (let k = 0; k < num_of_cols; k++) {
             let neighbors = 0;
             operations.forEach(([x, y]) => {
               const newI = i + x;
               const newK = k + y;
-              if (newI >= 0 && newI < numRows && newK >= 0 && newK < numCols) {
+              if (
+                newI >= 0 &&
+                newI < num_of_rows &&
+                newK >= 0 &&
+                newK < num_of_cols
+              ) {
                 neighbors += g[newI][newK];
               }
             });
@@ -74,13 +77,13 @@ export const GameOfLife: React.FC = () => {
     });
 
     setTimeout(runSimulation, 100);
-  }, []);
+  }, [num_of_cols, num_of_rows]);
 
   React.useEffect(() => {
-    if (setGrid) {
-      setGrid(rand_pop());
+    if (num_of_cols && num_of_rows) {
+      setGrid(rand_pop(num_of_rows, num_of_cols));
     }
-  }, [setGrid]);
+  }, [num_of_cols, num_of_rows]);
 
   React.useEffect(() => {
     if (grid.length) {
@@ -88,21 +91,40 @@ export const GameOfLife: React.FC = () => {
     }
   }, [grid.length, runSimulation]);
 
+  React.useEffect(() => {
+    let observer: ResizeObserver | undefined;
+
+    const div = ref.current;
+
+    if (exists(div)) {
+      observer = new ResizeObserver(() => {
+        const cols = Number(
+          getComputedStyle(div).getPropertyValue(NUM_COLS_CSS_VAR)
+        );
+        const rows = Number(
+          getComputedStyle(div).getPropertyValue(NUM_ROWS_CSS_VAR)
+        );
+
+        set_num_of_cols(cols);
+        set_num_of_rows(rows);
+      });
+      observer.observe(div, { box: "content-box" });
+    }
+
+    return () => observer?.disconnect();
+  }, [ref.current]);
+
   return (
-    <>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${numCols}, 20px)`,
-        }}
-      >
+    <div ref={ref} className={styles.container} id={styles.container}>
+      <div className={styles.game_of_life_grid}>
         {grid.map((rows, i) =>
           rows.map((_col, k) => (
             <div
+              className={styles.square}
               key={`${i}-${k}`}
               onClick={() => {
                 const newGrid = extinct
-                  ? rand_pop()
+                  ? rand_pop(num_of_rows, num_of_cols)
                   : produce(grid, (gridCopy) => {
                       gridCopy[i][k] = grid[i][k] ? 0 : 1;
                     });
@@ -114,10 +136,7 @@ export const GameOfLife: React.FC = () => {
                 setGrid(newGrid);
               }}
               style={{
-                width: 20,
-                height: 20,
                 backgroundColor: grid[i][k] ? "pink" : undefined,
-                border: "solid 1px black",
               }}
             />
           ))
@@ -129,14 +148,25 @@ export const GameOfLife: React.FC = () => {
           for Dial-a-view&trade;
         </div>
       )}
-    </>
+    </div>
   );
 };
 
-function rand_pop() {
+function rand_pop(num_of_rows: number, num_of_cols: number) {
   const rows = [];
-  for (let i = 0; i < numRows; i++) {
-    rows.push(Array.from(Array(numCols), () => (Math.random() > 0.7 ? 1 : 0)));
+  for (let i = 0; i < num_of_rows; i++) {
+    rows.push(
+      Array.from(Array(num_of_cols), () => (Math.random() > 0.7 ? 1 : 0))
+    );
+  }
+
+  return rows;
+}
+
+function generateEmptyGrid(rs: number, cs: number) {
+  const rows = [];
+  for (let i = 0; i < rs; i++) {
+    rows.push(Array.from(Array(cs), () => 0));
   }
 
   return rows;

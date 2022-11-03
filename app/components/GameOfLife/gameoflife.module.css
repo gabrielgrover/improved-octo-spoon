@@ -1,0 +1,33 @@
+.container {
+	--numCols: 15;
+	--numRows: 15;
+	--squareSize: 15px;
+}
+
+
+.cta_text {
+	padding-top: 1.5em;
+}
+
+.game_of_life_grid {
+	display: grid;
+	grid-template-columns: repeat(var(--numCols), var(--squareSize));
+}
+
+.square {
+	width: var(--squareSize);
+	height: var(--squareSize);
+	border: solid 1px black;
+}
+
+.pink_bg {
+	background-color: pink;
+}
+
+@media only screen and (min-width: 600px) {
+	.container {
+		--numCols: 25; 
+		--numRows: 25;
+		--squareSize: 20px;
+	}
+}

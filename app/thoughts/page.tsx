@@ -1,7 +1,7 @@
 import { list_blogs, get_blog_url } from "../../Blog";
 import styles from "./styles.module.css";
 import { ThoughtTile } from "./ThoughtTile";
-import { PageHeading } from "../PageHeading";
+import { PageHeading } from "../components";
 
 const Thoughts = async () => {
   const blogs = await list_blogs();

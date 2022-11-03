@@ -1,5 +1,5 @@
 import { Blog, load_blog_html } from "../../Blog";
-import { PageHeading } from "../PageHeading";
+import { PageHeading } from "../components";
 import { Constants } from "../../utils";
 
 const About = async () => {

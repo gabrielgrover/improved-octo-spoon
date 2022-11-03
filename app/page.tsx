@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { GameOfLife } from "./GameOfLife/GameOfLife";
+import { GameOfLife, PageHeading } from "./components";
 import styles from "./page.module.css";
-import { PageHeading } from "./PageHeading";
 
 export default function Home() {
   return (
