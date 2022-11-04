@@ -28,11 +28,21 @@ export const GameOfLife: React.FC = () => {
   const [num_of_rows, set_num_of_rows] = React.useState<number>(0);
 
   const ref = React.createRef<HTMLDivElement>();
+  const sim_gate_ref = React.useRef<boolean>(true);
+  const run_count_ref = React.useRef(0);
+
+  const lock_sim = () => {
+    sim_gate_ref.current = false;
+  };
+
+  const unlock_sim = () => {
+    sim_gate_ref.current = true;
+  };
 
   const [extinct, set_extinct] = React.useState(false);
 
   const runSimulation = React.useCallback(() => {
-    if (!num_of_rows || !num_of_cols) {
+    if (!num_of_rows || !num_of_cols || !sim_gate_ref.current) {
       return;
     }
 
@@ -86,10 +96,14 @@ export const GameOfLife: React.FC = () => {
   }, [num_of_cols, num_of_rows]);
 
   React.useEffect(() => {
-    if (grid.length) {
+    const first_run = run_count_ref.current === 0;
+
+    if (grid.length && first_run) {
+      run_count_ref.current += 1;
+      unlock_sim();
       runSimulation?.();
     }
-  }, [grid.length, runSimulation]);
+  }, [grid.length]);
 
   React.useEffect(() => {
     let observer: ResizeObserver | undefined;
@@ -104,6 +118,8 @@ export const GameOfLife: React.FC = () => {
         const rows = Number(
           getComputedStyle(div).getPropertyValue(NUM_ROWS_CSS_VAR)
         );
+
+        lock_sim();
 
         set_num_of_cols(cols);
         set_num_of_rows(rows);
@@ -134,6 +150,11 @@ export const GameOfLife: React.FC = () => {
                 }
 
                 setGrid(newGrid);
+
+                if (!sim_gate_ref.current) {
+                  unlock_sim();
+                  runSimulation();
+                }
               }}
               style={{
                 backgroundColor: grid[i][k] ? "pink" : undefined,
@@ -158,15 +179,6 @@ function rand_pop(num_of_rows: number, num_of_cols: number) {
     rows.push(
       Array.from(Array(num_of_cols), () => (Math.random() > 0.7 ? 1 : 0))
     );
-  }
-
-  return rows;
-}
-
-function generateEmptyGrid(rs: number, cs: number) {
-  const rows = [];
-  for (let i = 0; i < rs; i++) {
-    rows.push(Array.from(Array(cs), () => 0));
   }
 
   return rows;
