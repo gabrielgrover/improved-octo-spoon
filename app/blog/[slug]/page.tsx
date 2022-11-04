@@ -1,18 +1,15 @@
 import { Blog, list_blogs, load_blog_html } from "../../../Blog";
 
 type Props = {
-  params: { slug: string; html: string };
+  params: { slug: string };
 };
 
-const BlogPage = async (props: any) => {
+const BlogPage = async (props: Props) => {
   const { slug } = props.params;
 
   const html = await load_blog_html(slug);
 
-  //console.log({ html });
-
-  return <div dangerouslySetInnerHTML={{ __html: html ?? "" }} />;
-  //return <Blog html={html} />;
+  return <Blog html={html} />;
 };
 
 export async function generateStaticParams() {
