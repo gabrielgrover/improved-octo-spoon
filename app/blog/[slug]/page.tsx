@@ -1,4 +1,4 @@
-import { Blog } from "../../../Blog";
+//import { Blog } from "../../../Blog";
 
 type Props = {
   params: { slug: string };
@@ -7,8 +7,9 @@ type Props = {
 
 const BlogPage = (props: any) => {
   const blog_id = props.params.slug;
+  console.log({ blog_id });
 
-  return <Blog id={blog_id} />;
+  return <div>hello world</div>;
 };
 
 export default BlogPage;

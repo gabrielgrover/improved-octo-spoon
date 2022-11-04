@@ -10,7 +10,7 @@ export const Blog = asyncComponent(async (props: Props) => {
 
   return (
     <div className={styles.container}>
-      <div dangerouslySetInnerHTML={{ __html }} />
+      <div dangerouslySetInnerHTML={{ __html }} />{" "}
     </div>
   );
 });

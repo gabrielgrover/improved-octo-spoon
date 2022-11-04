@@ -18,7 +18,7 @@
     "markdown-it-color": "^2.1.1",
     "markdown-it-highlightjs": "^4.0.1",
     "markdown-it-imsize": "^2.0.1",
-    "next": "13.0.1",
+    "next": "^13.0.2-canary.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-query": "^3.39.2",
