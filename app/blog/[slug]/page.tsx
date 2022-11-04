@@ -15,9 +15,6 @@ const BlogPage = async (props: Props) => {
 export async function generateStaticParams() {
   const blogs = await list_blogs();
 
-  //console.log("typeof html", typeof blogs[0]?.html);
-  //console.log({ blogs });
-
   return blogs.map((b) => ({
     slug: String(b.id),
   }));

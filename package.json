@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "NODE_ENV=test jest",
-    "blog:create": "BLOGS_DIR=/Blog/blogs yarn voidlog_cli create",
-    "blog:edit": "BLOGS_DIR=/Blog/blogs yarn voidlog_cli edit"
+    "blog:create": "EDITOR=lvim BLOGS_DIR=/Blog/blogs yarn voidlog_cli create",
+    "blog:edit": "EDITOR=lvim BLOGS_DIR=/Blog/blogs yarn voidlog_cli edit"
   },
   "dependencies": {
     "immer": "^9.0.16",

@@ -227,26 +227,34 @@ app
        └── styles.module.css
 ```
 
-When we use a sub directory named `[slug]` we can use routes like `/blog/1`, and the value `1` will show up in the props of the blog page component.
+When we use a sub directory named `[slug]` we can use routes like `/blog/1`, and the value `1` will show up in the props of the blog page component.  The pages of these routes will get generated at build time.  So we need to implement the `generateStaticParams` function.  In this function we get all the blogs and inject each blog id into a slug property.  NextJS will then pass that id to the `BlogPage` component.  We can then fetch the blog markdown with `load_blog_html` and passing the blog id stored in params.  
 
 ```typescript
-import { load_blog_html, Blog } from "../../../Blog";
+import { Blog, list_blogs, load_blog_html } from "../../../Blog";
 
 type Props = {
   params: { slug: string };
-  searchParams: { id: string };
 };
 
 const BlogPage = async (props: Props) => {
-  const blog_id = props.params.slug; //<--- Slug here
-  const html = await load_blog_html(blog_id);
+  const { slug } = props.params;
+
+  const html = await load_blog_html(slug);
 
   return <Blog html={html} />;
 };
+
+export async function generateStaticParams() {
+  const blogs = await list_blogs();
+
+  return blogs.map((b) => ({
+    slug: String(b.id),
+  }));
+}
 
 export default BlogPage;
 ```
 
 ## Conclusion
 
-I hope this `void log` was able to show you how to render markdown files that are stored locally on the server.   
+I hope this `void log` was able to show you how to render markdown files that are stored locally on the server.  In my next `void log` I will be covering how I made the {blue}([`Dial-A-View`](/)) grid responsive
