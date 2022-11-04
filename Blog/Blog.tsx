@@ -6,7 +6,7 @@ type Props = {
 };
 
 export const Blog = asyncComponent(async (props: Props) => {
-  //const __html = await load_blog_html(props.id);
+  const __html = await load_blog_html(props.id);
   //
 
   return <div>hello id {props.id}</div>;
