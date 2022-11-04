@@ -9,7 +9,7 @@ const BlogPage = (props: any) => {
   const blog_id = props.params.slug;
   console.log({ blog_id });
 
-  return <div>hello world</div>;
+  return <div>hello id {blog_id}</div>;
 };
 
 export default BlogPage;
