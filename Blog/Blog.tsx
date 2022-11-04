@@ -6,16 +6,16 @@ type Props = {
 };
 
 export const Blog = asyncComponent(async (props: Props) => {
-  const __html = await load_blog_html(props.id);
+  //const __html = await load_blog_html(props.id);
   //
 
-  //return <div>hello id {props.id}</div>;
+  return <div>hello id {props.id}</div>;
 
-  return (
-    <div className={styles.container}>
-      <div dangerouslySetInnerHTML={{ __html }} />{" "}
-    </div>
-  );
+  // return (
+  //   <div className={styles.container}>
+  //     <div dangerouslySetInnerHTML={{ __html }} />{" "}
+  //   </div>
+  // );
 });
 
 function asyncComponent<T, R>(fn: (arg: T) => Promise<R>): (arg: T) => R {
