@@ -26,6 +26,17 @@ export async function list_blogs(): Promise<BlogMeta[]> {
   return blogs;
 }
 
+export async function get_all_blog_html() {
+  const blog_metas = await list_blogs();
+
+  return Promise.all(
+    blog_metas.map(async (blog_meta) => ({
+      ...blog_meta,
+      html: await load_blog_html(String(blog_meta.id)),
+    }))
+  );
+}
+
 export function get_blog_url(blog_id: number) {
   return `/blog/${blog_id}`;
 }

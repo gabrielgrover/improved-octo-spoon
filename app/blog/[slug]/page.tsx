@@ -1,14 +1,29 @@
-import { Blog } from "../../../Blog";
+import { Blog, list_blogs, load_blog_html } from "../../../Blog";
 
 type Props = {
-  params: { slug: string };
-  searchParams: { id: string };
+  params: { slug: string; html: string };
 };
 
-const BlogPage = (props: any) => {
-  const blog_id = props.params.slug;
+const BlogPage = async (props: any) => {
+  const { slug } = props.params;
 
-  return <Blog id={blog_id} />;
+  const html = await load_blog_html(slug);
+
+  //console.log({ html });
+
+  return <div dangerouslySetInnerHTML={{ __html: html ?? "" }} />;
+  //return <Blog html={html} />;
 };
+
+export async function generateStaticParams() {
+  const blogs = await list_blogs();
+
+  //console.log("typeof html", typeof blogs[0]?.html);
+  //console.log({ blogs });
+
+  return blogs.map((b) => ({
+    slug: String(b.id),
+  }));
+}
 
 export default BlogPage;

@@ -1,22 +1,22 @@
 import styles from "./styles.module.css";
-import { load_blog_html } from "./api";
 
 type Props = {
-  id: string;
+  html: string;
 };
 
-export const Blog = asyncComponent(async (props: Props) => {
-  const __html = await load_blog_html(props.id);
+export const Blog = (props: Props) => {
   //
 
-  return <div>hello @ id {props.id}</div>;
+  //const __html = props.html;
+  //return <div>hello @ id {props.id}</div>;
 
-  // return (
-  //   <div className={styles.container}>
-  //     <div dangerouslySetInnerHTML={{ __html }} />{" "}
-  //   </div>
-  // );
-});
+  return (
+    <div
+      className={styles.container}
+      dangerouslySetInnerHTML={{ __html: props.html }}
+    />
+  );
+};
 
 function asyncComponent<T, R>(fn: (arg: T) => Promise<R>): (arg: T) => R {
   return fn as (arg: T) => R;
