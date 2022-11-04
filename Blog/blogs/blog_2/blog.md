@@ -23,7 +23,7 @@ Here is the shape of the directory that contains my markdown files.
 Blog/blogs
 ├── blog_1
 │   ├── blog.md
-│   └── meta.json          // <--- Generated via codeblock and markdown-it-highlightjs
+│   └── meta.json
 └── blog_2
     ├── blog.md
     └── meta.json
@@ -166,7 +166,7 @@ import { ThoughtTile } from "./ThoughtTile";
 import { PageHeading } from "../PageHeading";
 
 const Thoughts = async () => {
-  const blogs = await list_blogs(); // <--- this returns a BlogMeta[]
+  const blogs = await list_blogs();
 
   return (
     <div className={styles.ThoughtsContainer}>
