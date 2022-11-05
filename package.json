@@ -9,9 +9,13 @@
     "lint": "next lint",
     "test": "NODE_ENV=test jest",
     "blog:create": "EDITOR=lvim BLOGS_DIR=/Blog/blogs yarn voidlog_cli create",
-    "blog:edit": "EDITOR=lvim BLOGS_DIR=/Blog/blogs yarn voidlog_cli edit"
+    "blog:edit": "EDITOR=lvim BLOGS_DIR=/Blog/blogs yarn voidlog_cli edit",
+    "planetscale:push": "npx prisma db push",
+    "prisma:generate-types": "yarn prisma generate"
   },
   "dependencies": {
+    "@prisma/client": "^4.5.0",
+    "fp-ts": "^2.13.1",
     "immer": "^9.0.16",
     "markdown-it": "^13.0.1",
     "markdown-it-attrs": "^4.1.4",
@@ -22,6 +26,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-query": "^3.39.2",
+    "superstruct": "^0.16.7",
     "voidlog_cli": "^0.0.8"
   },
   "devDependencies": {
