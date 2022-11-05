@@ -109,7 +109,7 @@ export function validate_and_add_comment(
 function validate_comment_input(comment_input: unknown) {
   console.log("validate_comment_input called", { comment_input });
   const validation = S.object({
-    content: S.size(S.string(), 7),
+    content: S.size(S.string(), 7, Infinity),
     blogId: S.number(),
   });
 
