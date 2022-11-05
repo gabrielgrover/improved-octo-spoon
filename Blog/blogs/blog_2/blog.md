@@ -257,4 +257,4 @@ export default BlogPage;
 
 ## Conclusion
 
-I hope this `void log` was able to show you how to render markdown files that are stored locally on the server.  I have been hearing a lot of good things about the Prisma, PlanetScale, and NextJS combo.  For the next entry I will implement a commenting system for the `void log` using Prisma and PlanetScale.  Until next time.  Blessings of the `void` upon thy mouth.
+I hope this `void log` was able to show you how to render markdown files that are stored locally on the server.  I have been hearing a lot of good things about the Prisma.  For the next entry I will implement a commenting system for the `void log` using Prisma and Sqlite.  Until next time.  Blessings of the `void` upon thy mouth.
