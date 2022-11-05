@@ -257,4 +257,4 @@ export default BlogPage;
 
 ## Conclusion
 
-I hope this `void log` was able to show you how to render markdown files that are stored locally on the server.  In my next `void log` I will be covering how I made the {blue}([`Dial-A-View`](/)) grid responsive
+I hope this `void log` was able to show you how to render markdown files that are stored locally on the server.  In my next `void log` I will be covering how I made the {blue}([`Dial-A-View`](/)) grid responsive.  Blessings of the `void` upon you.
