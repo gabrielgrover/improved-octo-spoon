@@ -189,7 +189,7 @@ export default Thoughts;
 
 This is the first example of my favorite new NextJS feature.  Notice the call to `list_blogs`.  Since this component is under the `app` directory `NextJS` assumes it is a server component.  This gives the ability to `await` a async function call in the body of a function component.  Before we would have to probably export a `getStaticProps` function if we were using NextJS, and if we were using a client side frame work we would need to use a mixture of `React.useEffect` and `React.useState`. Another important thing to notice/remember is that `list_blogs` is reading the filesystem on the `server`.  In `NextJS` we can now seemlessly write logic that fetches data on the server.  Again, no need for `getStaticProps`.  The logic can happen inside the function component definition.  In this case, the definition of the `Thoughts` component.    
 
-The `ThoughtTile` component in the above code is where the link to than actual blog page is handled.  
+The `ThoughtTile` component in the above code is where the link to the actual blog page is handled.  
 
 ```typescript
 import Link from "next/link";
