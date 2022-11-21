@@ -11,6 +11,9 @@ export enum BlogErrorType {
   AddCommentFailed = "AddCommentFailed",
   GetCommentFailed = "GetCommentFailed",
   InvalidCommentInput = "InvalidCommentInput",
+  PrismaClientUnavailable = "PrismaClientUnavailable",
+  Unknown = "Unknown",
+  UnrecognizedResponse = "UnrecognizedResponse",
 }
 
 export const AddCommentError = (
@@ -38,3 +41,31 @@ export const InvalidCommentInputError = (
   ext_lib,
   type: BlogErrorType.InvalidCommentInput,
 });
+
+export const PrismaClientUnavailable = (): BlogError => ({
+  message: "PrismaClient is unavailable",
+  type: BlogErrorType.PrismaClientUnavailable,
+});
+
+export const Unknown = (ext_lib?: BlogError["ext_lib"]): BlogError => ({
+  message: "An unknown error occurred",
+  type: BlogErrorType.Unknown,
+  ext_lib,
+});
+
+export const UnrecognizedResponse = (procedure: string): BlogError => ({
+  message: `An UnrecognizedResponse for procedure: ${procedure}`,
+  type: BlogErrorType.UnrecognizedResponse,
+});
+
+export function is_blog_err(val: unknown): val is BlogError {
+  const _val = val as BlogError;
+
+  for (const e in BlogErrorType) {
+    if (e === _val?.type) {
+      return true;
+    }
+  }
+
+  return false;
+}

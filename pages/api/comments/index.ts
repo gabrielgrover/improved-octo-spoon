@@ -1,40 +1,26 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import * as BlogAPI from "../../../Blog/api";
+import * as F from "fp-ts/function";
+import * as TE from "fp-ts/TaskEither";
+import * as CommentAPI from "../../../apis/comment_api";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const comments_handler = create_comments_handler(req, res);
-
-  comments_handler(req.method);
-}
-
-function create_comments_handler(req: NextApiRequest, res: NextApiResponse) {
-  const add_comment = BlogAPI.validate_and_add_comment(
-    (e) => res.status(400).json(e),
-    () => res.status(201)
-  );
-  const get_comments = BlogAPI.get_comments(
-    (e) => res.status(400).json(e),
-    (comments) => res.status(200).json({ comments })
+  const try_add_comment = F.pipe(
+    CommentAPI.validate_and_add_comment(JSON.parse(req.body)),
+    TE.map((comment) => res.status(201).send({ success: true, comment })),
+    TE.mapLeft((e) => res.status(400).json(e))
   );
 
-  const handle_post = () => {
-    console.log("handling post");
-    add_comment(req.body);
-  };
+  const try_get_all_comments = F.pipe(
+    CommentAPI.get_comments(),
+    TE.map((comments) => res.status(200).send({ comments })),
+    TE.mapLeft((e) => res.status(400).send(e))
+  );
 
-  const handle_get = () => {
-    get_comments();
-  };
+  if (req.method === "POST") {
+    try_add_comment();
+  }
 
-  return (method?: string) => {
-    switch (method) {
-      case "GET":
-        handle_get();
-      case "POST":
-        handle_post();
-
-      default:
-        res.status(500);
-    }
-  };
+  if (req.method === "GET") {
+    try_get_all_comments();
+  }
 }

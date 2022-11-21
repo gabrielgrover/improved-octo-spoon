@@ -1,4 +1,5 @@
-import { Blog, load_blog_html } from "../../Blog";
+import { Blog } from "../../Blog";
+import { load_blog_html } from "../../apis/blog_api";
 import { PageHeading } from "../components";
 import { Constants } from "../../utils";
 

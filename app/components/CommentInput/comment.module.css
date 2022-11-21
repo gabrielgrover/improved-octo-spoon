@@ -1,5 +1,17 @@
-.comment_input {
+.comment_input_light {
   width: 400px;
   height: 200px;
+	background-color: transparent;
 }
 
+.comment_input_dark {
+  width: 400px;
+  height: 200px;
+	background-color: transparent;
+	color: wheat;
+}
+
+.text_area_container {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
