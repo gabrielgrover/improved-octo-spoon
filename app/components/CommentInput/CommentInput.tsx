@@ -11,6 +11,9 @@ type Props = {
   blog_id: string;
 };
 
+/**
+ * This is a client side component.  It can only receive serializable props.
+ */
 export const CommentInput: React.FC<Props> = (props) => {
   const { theme } = useTheme();
   const [content, set_content] = React.useState("");

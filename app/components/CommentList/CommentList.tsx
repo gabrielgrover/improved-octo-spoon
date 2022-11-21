@@ -41,14 +41,14 @@ function render_comments_for_blog_id(id: number) {
 
   const filter_comments_for_blog_id = A.filter((c: Comment) => c.blogId === id);
 
-  const render_comment_collection = (cs: JSX.Element[]) => <>{cs}</>;
+  const to_single_jsx_element = (cs: JSX.Element[]) => <>{cs}</>;
 
   const filter_sort_map = F.flow(
     filter_comments_for_blog_id,
     sort_comments_by_created_at,
     to_serializable,
     A.map((c) => <CommentCard key={c.id} comment={c} />),
-    render_comment_collection,
+    to_single_jsx_element,
     T.of
   );
 

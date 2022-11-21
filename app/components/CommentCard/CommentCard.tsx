@@ -7,7 +7,7 @@ type Props = {
 };
 
 /**
- * This is a client side component
+ * This is a client side component.  It can only receive serializable props.
  */
 export const CommentCard: React.FC<Props> = (props) => {
   return <div>{props.comment.content}</div>;
