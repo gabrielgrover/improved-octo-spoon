@@ -8,7 +8,8 @@ import { CommentCard } from "../CommentCard";
 const useTheme = () => React.useContext(ThemeContext);
 
 type Props = {
-  blog_id: string;
+  blog_id: number;
+  comment_count: number;
 };
 
 /**
@@ -17,7 +18,11 @@ type Props = {
 export const CommentInput: React.FC<Props> = (props) => {
   const { theme } = useTheme();
   const [content, set_content] = React.useState("");
-  const { add_comment, add_comment_err, comments } = useComment();
+  const { add_comment, add_comment_err, comments, loading } = useComment();
+
+  if (add_comment_err) {
+    console.error(add_comment_err);
+  }
 
   const comment_input_styles =
     theme === "light" ? styles.comment_input_light : styles.comment_input_dark;
@@ -29,25 +34,25 @@ export const CommentInput: React.FC<Props> = (props) => {
           className={comment_input_styles}
           name="comment"
           onChange={(e) => set_content(e.target.value)}
+          value={content}
         />
         <button
-          onClick={() =>
-            add_comment({ content, blogId: parseInt(props.blog_id) })
-          }
+          onClick={() => {
+            add_comment({ content, blogId: props.blog_id });
+            set_content("");
+          }}
+          className={theme === "light" ? styles.btn : styles.btn_dark_theme}
         >
-          Submit
+          {loading ? "Sending to the void..." : "Submit"}
         </button>
       </div>
 
+      {props.comment_count + comments.length > 0 && (
+        <p className={styles.comment_list_title}>Comments from the void</p>
+      )}
+
       {comments.map((c, idx) => (
-        <CommentCard
-          key={idx}
-          comment={{
-            ...c,
-            createdAt: c.createdAt.getTime(),
-            updatedAt: c.updatedAt.getTime(),
-          }}
-        />
+        <CommentCard key={idx} comment={c} />
       ))}
     </>
   );

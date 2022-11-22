@@ -12,6 +12,33 @@
 }
 
 .text_area_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
 	margin-top: 16px;
 	margin-bottom: 16px;
 }
+
+.comment_list_title {
+	font-family: MaisonNeue-Medium;
+}
+
+.btn {
+	margin-top: 8px;
+	max-width: 100px;
+	height: 35px;
+	border-radius: 10px;
+	background-color: transparent;
+}
+
+.btn_dark_theme {
+	margin-top: 8px;
+	max-width: 100px;
+	height: 35px;
+	border-radius: 10px;
+	background-color: transparent;
+	color: wheat;
+	border-color: white;
+	border-width: 1px;
+}
+

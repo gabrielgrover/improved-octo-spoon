@@ -11,7 +11,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>Create Next App</title>
+        <title>void log</title>
         <meta name="description" content="web dev blog" />
         <meta name="author" content="gabriel grover" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
