@@ -11,7 +11,8 @@
     "blog:create": "EDITOR=lvim BLOGS_DIR=/Blog/blogs yarn voidlog_cli create",
     "blog:edit": "EDITOR=lvim BLOGS_DIR=/Blog/blogs yarn voidlog_cli edit",
     "planetscale:push": "npx prisma db push",
-    "prisma:generate-types": "yarn prisma generate"
+    "prisma:generate-types": "yarn prisma generate",
+    "postinstall": "yarn prisma:generate-types"
   },
   "dependencies": {
     "@prisma/client": "^4.5.0",
@@ -23,6 +24,7 @@
     "markdown-it-highlightjs": "^4.0.1",
     "markdown-it-imsize": "^2.0.1",
     "next": "^13.0.2",
+    "prisma": "^4.6.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-query": "^3.39.2",
