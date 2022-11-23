@@ -11,6 +11,10 @@ import {
   UnrecognizedResponse,
 } from "./blog_err";
 
+const headers = new Headers({
+  "Content-Type": "application/json",
+});
+
 export function add_comment(comment_input: CommentInput) {
   const post_comment_task = TE.tryCatch(
     () => post_comment(comment_input),
@@ -36,6 +40,7 @@ async function post_comment(comment_input: CommentInput) {
   return fetch(COMMENT_BASE_URL, {
     method: "POST",
     body: JSON.stringify(comment_input),
+    headers,
   })
     .then((resp) => resp.json())
     .then((data) => {
@@ -43,7 +48,7 @@ async function post_comment(comment_input: CommentInput) {
         return Promise.reject(data);
       }
 
-      const comment = data.comment;
+      const comment = data?.comment;
 
       if (!is_comment(comment)) {
         return Promise.reject(UnrecognizedResponse("AddComment"));
@@ -66,7 +71,7 @@ async function post_comment(comment_input: CommentInput) {
 }
 
 async function fetch_comments() {
-  return fetch(COMMENT_BASE_URL)
+  return fetch(COMMENT_BASE_URL, { headers })
     .then((resp) => resp.json())
     .then((data) => {
       const maybe_comments = data.comments;

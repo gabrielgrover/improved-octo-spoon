@@ -20,9 +20,9 @@ export const CommentInput: React.FC<Props> = (props) => {
   const [content, set_content] = React.useState("");
   const { add_comment, add_comment_err, comments, loading } = useComment();
 
-  if (add_comment_err) {
-    console.error(add_comment_err);
-  }
+  React.useEffect(() => {
+    if (add_comment_err) console.error(add_comment_err);
+  }, [add_comment_err]);
 
   const comment_input_styles =
     theme === "light" ? styles.comment_input_light : styles.comment_input_dark;
@@ -37,7 +37,12 @@ export const CommentInput: React.FC<Props> = (props) => {
           value={content}
         />
         <button
-          onClick={() => {
+          onClick={(e) => {
+            if (loading) {
+              return;
+            }
+
+            e.preventDefault();
             add_comment({ content, blogId: props.blog_id });
             set_content("");
           }}
@@ -51,8 +56,8 @@ export const CommentInput: React.FC<Props> = (props) => {
         <p className={styles.comment_list_title}>Comments from the void</p>
       )}
 
-      {comments.map((c, idx) => (
-        <CommentCard key={idx} comment={c} />
+      {comments.map((c) => (
+        <CommentCard key={c.id} comment={c} />
       ))}
     </>
   );

@@ -5,15 +5,15 @@ import * as CommentAPI from "../../../apis/comment_api";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const try_add_comment = F.pipe(
-    CommentAPI.validate_and_add_comment(JSON.parse(req.body)),
-    TE.map((comment) => res.status(201).send({ success: true, comment })),
+    CommentAPI.validate_and_add_comment(req.body),
+    TE.map((comment) => res.status(201).json({ success: true, comment })),
     TE.mapLeft((e) => res.status(400).json(e))
   );
 
   const try_get_all_comments = F.pipe(
     CommentAPI.get_comments(),
-    TE.map((comments) => res.status(200).send({ comments })),
-    TE.mapLeft((e) => res.status(400).send(e))
+    TE.map((comments) => res.status(200).json({ comments })),
+    TE.mapLeft((e) => res.status(400).json(e))
   );
 
   if (req.method === "POST") {
