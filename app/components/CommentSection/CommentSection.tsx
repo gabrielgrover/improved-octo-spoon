@@ -38,6 +38,7 @@ async function AsyncCommentSection(props: Props) {
 }
 
 function render_err(blog_err: BlogError) {
+  console.log({ blog_err });
   return T.of(<div>Failed to fetch comments: {blog_err.message}</div>);
 }
 
