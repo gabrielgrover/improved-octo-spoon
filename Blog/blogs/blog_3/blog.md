@@ -145,4 +145,4 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 ## Conclusion
 
-This was a very high level over view of a subset of `functional` programming concepts.  You can check out the {green}([repo](https://github.com/gabrielgrover/improved-octo-spoon)) for this project.  Clone it and take a look at some of the code we went over.  If you have an `IDE` with `TypeScript` support then you can look at how the type inference works with `fp-ts`.  Getting your hands dirty will help a lot.  Flu season is here.  Becareful in your travels!
+This was a very high level over view of a subset of `functional` programming concepts.  You can check out the {green}([repo](https://github.com/gabrielgrover/improved-octo-spoon)) for this project.  Clone it and take a look at some of the code we went over.  If you have an `IDE` with `TypeScript` support then you can look at how the type inference works with `fp-ts`.  Getting your hands dirty will help a lot.  The next void log we will be going over how to use the work we did and `NextJS` async components to render out comments stored in our database.  Flu season is here.  Becareful in your travels!
