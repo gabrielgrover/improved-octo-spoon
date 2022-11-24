@@ -47,14 +47,14 @@ function render_err(blog_err: BlogError) {
 
 function render_comment_section(blog_id: number) {
   return F.flow(
-    generate_comment_cards_for_blog_id(blog_id),
+    generate_serialized_comments_for_blog_id(blog_id),
     T.map((comments) => (
       <CommentInput blog_id={blog_id} serialized_comments={comments} />
     ))
   );
 }
 
-function generate_comment_cards_for_blog_id(id: number) {
+function generate_serialized_comments_for_blog_id(id: number) {
   const to_serializable = A.map((c: Comment) => ({
     ...c,
     createdAt: c.createdAt.getTime(),
