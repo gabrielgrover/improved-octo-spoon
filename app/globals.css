@@ -73,101 +73,77 @@ Fonts
 	font-style: normal;
 }
 
-
-/*
-Date: 17.V.2011
-Author: pumbur <pumbur@pumbur.net>
-*/
-
-/*
-.hljs {
-  background: white;
-  color: #aaa;
-	display: inline-block;
-	padding: 8px;
-	border-radius: 10px;
-}
-*/
-
-.hljs {
-  color: #aaa;
-	display: inline-block;
-	padding: 8px;
-	border-radius: 10px;
-}
-
-.hljs[date-theme="light"] {
-  background: white;
-  color: #aaa;
-	display: inline-block;
-	padding: 8px;
-	border-radius: 10px;
-}
-
-.hljs[date-theme="dark"] {
+.hljs[data-theme="dark"] {
+  color: #abb2bf;
   background: #222;
-  color: #aaa;
-	display: inline-block;
-	padding: 8px;
-	border-radius: 10px;
-}
-
-.hljs-subst {
-  color: #aaa;
-}
-
-.hljs-section {
-  color: #fff;
 }
 
 .hljs-comment,
-.hljs-quote,
-.hljs-meta {
-  color: #444;
+.hljs-quote {
+  color: #5c6370;
+  font-style: italic;
 }
 
-.hljs-string,
-.hljs-symbol,
-.hljs-bullet,
-.hljs-regexp {
-  color: #ffcc33;
-}
-
-.hljs-number,
-.hljs-addition {
-  color: #00cc66;
-}
-
-.hljs-built_in,
-.hljs-literal,
-.hljs-type,
-.hljs-template-variable,
-.hljs-attribute,
-.hljs-link {
-  color: #32aaee;
-}
-
+.hljs-doctag,
 .hljs-keyword,
-.hljs-selector-tag,
-.hljs-name,
-.hljs-selector-id,
-.hljs-selector-class {
-  color: #6644aa;
-}
-
-.hljs-title,
-.hljs-variable,
-.hljs-deletion,
-.hljs-template-tag {
-  color: #bb1166;
+.hljs-formula {
+  color: #c678dd;
 }
 
 .hljs-section,
-.hljs-doctag,
-.hljs-strong {
-  font-weight: bold;
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e06c75;
+}
+
+.hljs-literal {
+  color: #56b6c2;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta .hljs-string {
+  color: #98c379;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #d19a66;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #61aeee;
+}
+
+.hljs-built_in,
+.hljs-title.class_,
+.hljs-class .hljs-title {
+  color: #e6c07b;
 }
 
 .hljs-emphasis {
   font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-link {
+  text-decoration: underline;
 }

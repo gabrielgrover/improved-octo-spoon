@@ -10,7 +10,7 @@ Salutations to you and the great void you hail from!  I hope this `void log` fin
 
 The {green}([fp-ts](https://github.com/gcanti/fp-ts)) package is a library that gives you super functional programming powers in `TypeScript`.  Fold, Map, and Reduce to your heart's content.  All with great type inference and safety. {green}([Prisma](https://www.prisma.io/)) is basically an ORM.  Haven't used it before.  So far it has been pretty decent.  I haven't had to do anything complex with it though.  Let us take a look at our first function.
 
-## get_comments
+## get_comments {#get-comments}
 
 ```typescript
 export function get_comments(where?: Partial<Comment>) {

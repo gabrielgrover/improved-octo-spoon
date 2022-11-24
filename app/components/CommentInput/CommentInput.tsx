@@ -35,6 +35,8 @@ export const CommentInput: React.FC<Props> = (props) => {
   const { add_comment, add_comment_err, added_comments, loading } =
     useComment();
 
+  console.log({ added_comments });
+
   const merged_comments = F.pipe(
     added_comments,
     A.map((c) => ({
@@ -45,10 +47,6 @@ export const CommentInput: React.FC<Props> = (props) => {
     A.concat(props.serialized_comments),
     A.uniq(eq_serialized_comment)
   );
-
-  React.useEffect(() => {
-    if (add_comment_err) console.error(add_comment_err);
-  }, [add_comment_err]);
 
   const comment_input_styles =
     theme === "light" ? styles.comment_input_light : styles.comment_input_dark;

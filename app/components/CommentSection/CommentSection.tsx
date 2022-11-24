@@ -30,19 +30,16 @@ const WrappedAsyncCommentSection = async_component_wrapper(AsyncCommentSection);
 async function AsyncCommentSection(props: Props) {
   const blog_id = parseInt(props.blog_id);
 
-  return F.pipe(
+  const render_comment_section_or_err = F.pipe(
     get_comments(),
     TE.fold(render_err, render_comment_section(blog_id))
-  )();
+  );
+
+  return render_comment_section_or_err();
 }
 
 function render_err(blog_err: BlogError) {
-  return T.of(
-    <>
-      <div>Failed to fetch comments: {blog_err.message}</div>
-      <div>lib_message: {JSON.stringify(blog_err.ext_lib, null, 2)}</div>
-    </>
-  );
+  return T.of(<div>Failed to fetch comments: {blog_err.message}</div>);
 }
 
 function render_comment_section(blog_id: number) {
@@ -55,13 +52,13 @@ function render_comment_section(blog_id: number) {
 }
 
 function generate_serialized_comments_for_blog_id(id: number) {
+  const filter_comments_for_blog_id = A.filter((c: Comment) => c.blogId === id);
+
   const to_serializable = A.map((c: Comment) => ({
     ...c,
     createdAt: c.createdAt.getTime(),
     updatedAt: c.updatedAt.getTime(),
   }));
-
-  const filter_comments_for_blog_id = A.filter((c: Comment) => c.blogId === id);
 
   const filter_sort_map = F.flow(
     filter_comments_for_blog_id,
