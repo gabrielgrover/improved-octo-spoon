@@ -65,11 +65,18 @@ function validate_comment_input(comment_input: unknown) {
     return comment_input;
   };
 
-  const create_err = (e: unknown) =>
-    InvalidCommentInputError({
+  const create_err = (e: unknown) => {
+    const err = e as S.StructError;
+    const lib_message = err
+      .failures()
+      .map((f) => f.message)
+      .join(", ");
+
+    return InvalidCommentInputError({
       name: "Superstruct",
-      lib_message: JSON.stringify((e as any).failures(), null, 2),
+      lib_message,
     });
+  };
 
   return F.pipe(
     E.tryCatch(validate, create_err),

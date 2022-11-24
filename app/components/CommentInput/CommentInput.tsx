@@ -3,7 +3,8 @@ import React from "react";
 import styles from "./comment.module.css";
 import { ThemeContext } from "../../../Providers/ThemeProvider";
 import { useComment } from "../../../hooks/useComment";
-import { CommentCard } from "../CommentCard";
+import { CommentCard } from "../CommentCard/CommentCard";
+import { BlogErrorMessage } from "../BlogErrorMessage/BlogErrorMessage";
 
 const useTheme = () => React.useContext(ThemeContext);
 
@@ -36,6 +37,8 @@ export const CommentInput: React.FC<Props> = (props) => {
           onChange={(e) => set_content(e.target.value)}
           value={content}
         />
+        {add_comment_err && <BlogErrorMessage blog_err={add_comment_err} />}
+
         <button
           onClick={(e) => {
             if (loading) {
