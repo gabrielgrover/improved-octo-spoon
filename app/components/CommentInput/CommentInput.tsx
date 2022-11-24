@@ -1,5 +1,9 @@
 "use client";
 import React from "react";
+import { Comment } from "@prisma/client";
+import * as A from "fp-ts/Array";
+import * as F from "fp-ts/function";
+import * as EQ from "fp-ts/Eq";
 import styles from "./comment.module.css";
 import { ThemeContext } from "../../../Providers/ThemeProvider";
 import { useComment } from "../../../hooks/useComment";
@@ -10,7 +14,16 @@ const useTheme = () => React.useContext(ThemeContext);
 
 type Props = {
   blog_id: number;
-  comment_count: number;
+  serialized_comments: SerializedComment[];
+};
+
+type SerializedComment = Omit<Comment, "createdAt" | "updatedAt"> & {
+  createdAt: number;
+  updatedAt: number;
+};
+
+const eq_serialized_comment: EQ.Eq<SerializedComment> = {
+  equals: (c1, c2) => c1.id === c2.id,
 };
 
 /**
@@ -19,7 +32,19 @@ type Props = {
 export const CommentInput: React.FC<Props> = (props) => {
   const { theme } = useTheme();
   const [content, set_content] = React.useState("");
-  const { add_comment, add_comment_err, comments, loading } = useComment();
+  const { add_comment, add_comment_err, added_comments, loading } =
+    useComment();
+
+  const merged_comments = F.pipe(
+    added_comments,
+    A.map((c) => ({
+      ...c,
+      createdAt: c.createdAt.getTime(),
+      updatedAt: c.updatedAt.getTime(),
+    })),
+    A.concat(props.serialized_comments),
+    A.uniq(eq_serialized_comment)
+  );
 
   React.useEffect(() => {
     if (add_comment_err) console.error(add_comment_err);
@@ -58,11 +83,11 @@ export const CommentInput: React.FC<Props> = (props) => {
         </button>
       </div>
 
-      {props.comment_count + comments.length > 0 && (
+      {merged_comments.length > 0 && (
         <p className={styles.comment_list_title}>Comments from the void</p>
       )}
 
-      {comments.map((c) => (
+      {merged_comments.map((c) => (
         <CommentCard key={c.id} comment={c} />
       ))}
     </>

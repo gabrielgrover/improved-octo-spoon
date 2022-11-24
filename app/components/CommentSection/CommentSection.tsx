@@ -6,7 +6,6 @@ import * as A from "fp-ts/Array";
 import { BlogError } from "../../../utils/blog_err";
 import { async_component_wrapper } from "../../../utils/async_component_wrapper";
 import { CommentInput } from "../CommentInput/CommentInput";
-import { CommentCard } from "../CommentCard/CommentCard";
 import {
   get_comments,
   sort_comments_by_created_at,
@@ -49,17 +48,10 @@ function render_err(blog_err: BlogError) {
 function render_comment_section(blog_id: number) {
   return F.flow(
     generate_comment_cards_for_blog_id(blog_id),
-    render_comment_input_and_comments(blog_id)
+    T.map((comments) => (
+      <CommentInput blog_id={blog_id} serialized_comments={comments} />
+    ))
   );
-}
-
-function render_comment_input_and_comments(blog_id: number) {
-  return T.map((elems: JSX.Element[]) => (
-    <>
-      <CommentInput blog_id={blog_id} comment_count={elems.length} />
-      {elems}
-    </>
-  ));
 }
 
 function generate_comment_cards_for_blog_id(id: number) {
@@ -75,7 +67,6 @@ function generate_comment_cards_for_blog_id(id: number) {
     filter_comments_for_blog_id,
     sort_comments_by_created_at,
     to_serializable,
-    A.map((c) => <CommentCard key={c.id} comment={c} />),
     T.of
   );
 
