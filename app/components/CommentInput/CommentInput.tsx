@@ -37,7 +37,10 @@ export const CommentInput: React.FC<Props> = (props) => {
           onChange={(e) => set_content(e.target.value)}
           value={content}
         />
-        {add_comment_err && <BlogErrorMessage blog_err={add_comment_err} />}
+
+        {add_comment_err && !loading && (
+          <BlogErrorMessage blog_err={add_comment_err} />
+        )}
 
         <button
           onClick={(e) => {

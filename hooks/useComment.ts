@@ -8,11 +8,14 @@ import { BlogError } from "../utils/blog_err";
 import type { CommentInput } from "../apis/types";
 
 export const useComment = () => {
-  const [add_comment_err, set_add_comment_err] = React.useState<BlogError>();
+  const [add_comment_err, set_add_comment_err] = React.useState<
+    BlogError | undefined
+  >();
   const [comments, set_comments] = React.useState<Comment[]>([]);
   const [loading, set_loading] = React.useState(false);
 
   function add_comment(comment_input: CommentInput) {
+    set_add_comment_err(undefined);
     set_loading(true);
     F.pipe(
       BlogRpc.add_comment(comment_input),
