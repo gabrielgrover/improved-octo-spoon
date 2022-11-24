@@ -35,8 +35,6 @@ export const CommentInput: React.FC<Props> = (props) => {
   const { add_comment, add_comment_err, added_comments, loading } =
     useComment();
 
-  console.log({ added_comments });
-
   const merged_comments = F.pipe(
     added_comments,
     A.map((c) => ({
@@ -65,29 +63,50 @@ export const CommentInput: React.FC<Props> = (props) => {
           <BlogErrorMessage blog_err={add_comment_err} />
         )}
 
-        <button
-          onClick={(e) => {
-            if (loading) {
-              return;
-            }
-
-            e.preventDefault();
+        <SubmitCommentBtn
+          loading={loading}
+          on_click={() => {
             add_comment({ content, blogId: props.blog_id });
             set_content("");
           }}
-          className={theme === "light" ? styles.btn : styles.btn_dark_theme}
-        >
-          {loading ? "Sending to the void..." : "Submit"}
-        </button>
+        />
       </div>
 
-      {merged_comments.length > 0 && (
+      <Comments comments={merged_comments} />
+    </>
+  );
+};
+
+function SubmitCommentBtn(props: { loading: boolean; on_click: () => void }) {
+  const { theme } = useTheme();
+
+  return (
+    <button
+      onClick={(e) => {
+        if (props.loading) {
+          return;
+        }
+
+        e.preventDefault();
+        props.on_click();
+      }}
+      className={theme === "light" ? styles.btn : styles.btn_dark_theme}
+    >
+      {props.loading ? "Sending to the void..." : "Submit"}
+    </button>
+  );
+}
+
+function Comments(props: { comments: SerializedComment[] }) {
+  return (
+    <>
+      {props.comments.length > 0 && (
         <p className={styles.comment_list_title}>Comments from the void</p>
       )}
 
-      {merged_comments.map((c) => (
+      {props.comments.map((c) => (
         <CommentCard key={c.id} comment={c} />
       ))}
     </>
   );
-};
+}
