@@ -1,8 +1,8 @@
 # Async Rendering NextJS Server Components with fp-ts
 
-Greetings edge lord!  Hope your travels through the void have been filled with cringe hot takes and rug pulls.  Here, however, you will be seeing the approach I took to render comments on this site.  We will be referencing items covered in the last {green}([`void log`](/blog/3)).  Read it if you wish.  This `void log` will stay high level.  Follow me.
+Greetings edge lord!  Hope your travels through the void have been filled with cringe hot takes and rug pulls.  Here, however, you will be seeing the approach I took to render comments on this site.  We will be referencing items covered in the last {#98c379}([`void log`](/blog/3)).  Read it if you wish.  This `void log` will stay high level.  Follow me.
 
-## The NextJS Server Component
+## The NextJS Server Component {#server-component}
 
 First let's take a look at the code for the blog page component.
 
@@ -24,15 +24,13 @@ const BlogPage = async (props: Props) => {
 };
 ```
 
-Notice the `await`?  The blog page is an example of an Async Server component.  I go into detail about the blog page {green}([here](/blog/2)).  What we are interested in is the `CommentSection` component.  We will go through the implementation in small chunks.  
+Notice the `await`?  The blog page is an example of an Async Server component.  I go into detail about the blog page {#98c379}([here](/blog/2)).  What we are interested in is the `CommentSection` component.  We will go through the implementation in small chunks.  
 
 ### A small hack
 
 There is an issue with typescript definitions for react right now.  If you import an Async Component and try to render it you get an error message saying something similar to the following.
 
-```
-Component cannot be used as a JSX component. Its return type 'Promise<Element>' is not a valid JSX element.
-```
+{#e06c75}(`Component cannot be used as a JSX component. Its return type 'Promise<Element>' is not a valid JSX element.`)
 
 To suppress this message we can use the following function 
 
@@ -63,7 +61,7 @@ export const CommentSection: React.FC<Props> = (props) => {
 const WrappedAsyncCommentSection = async_component_wrapper(AsyncCommentSection);
 ```
 
-Now let's take a look at the `AsyncCommentSection` component.  This is where we wil be referencing items covered in the previous {green}([`void log`](/blog/3)).
+Now let's take a look at the `AsyncCommentSection` component.  This is where we wil be referencing items covered in the previous {#98c379}([`void log`](/blog/3)).
 
 ```typescript
 async function AsyncCommentSection(props: Props) {
@@ -78,7 +76,7 @@ async function AsyncCommentSection(props: Props) {
 }
 ```
 
-The `render_comment_section_or_err` function calls `get_comments`, which can be a success or a failure.  The `TE.fold` will call `render_err` for a failure, and `render_comment_section` for a success. Keep in mind that `get_comments` is an async function.  It is grabbing comments from a database.  You can see the definition {green}([here](/blog/3#get-comments)).  The `render_err` function is simple.  Here it is.  
+The `render_comment_section_or_err` function calls `get_comments`, which can be a success or a failure.  The `TE.fold` will call `render_err` for a failure, and `render_comment_section` for a success. Keep in mind that `get_comments` is an async function.  It is grabbing comments from a database.  You can see the definition {#98c379}([here](/blog/3#get-comments)).  The `render_err` function is simple.  Here it is.  
 
 ```typescript
 function render_err(blog_err: BlogError) {
@@ -161,30 +159,27 @@ export const CommentInput: React.FC<Props> = (props) => {
           <BlogErrorMessage blog_err={add_comment_err} />
         )}
 
-        <button
-          onClick={(e) => {
-            if (loading) {
-              return;
-            }
-
-            e.preventDefault();
+        <SubmitCommentBtn
+          loading={loading}
+          on_click={() => {
             add_comment({ content, blogId: props.blog_id });
             set_content("");
           }}
-          className={theme === "light" ? styles.btn : styles.btn_dark_theme}
-        >
-          {loading ? "Sending to the void..." : "Submit"}
-        </button>
+        />
       </div>
 
-      {merged_comments.length > 0 && (
-        <p className={styles.comment_list_title}>Comments from the void</p>
-      )}
-
-      {merged_comments.map((c) => (
-        <CommentCard key={c.id} comment={c} />
-      ))}
+      <Comments comments={merged_comments} />
     </>
   );
 };
 ```
+
+The above is a pretty average component.  The one thing of note we are doing is merging the comments comming in as props and the comment(s) a user adds, which come in a property returned from the {#ff7100}(`useComments`) hook.  This is the cool part of being able to weave {#ff7100}(`Client Components`) into {#ff7100}(`Server Components`).  Recall, that the {#98c379}([`Server Component`](/blog/4#server-component)) fetched comments and passed them as props to the {#ff7100}(`Client Component`).  That data fetch happens on the {#ff7100}(`server`), which means that when the {#ff7100}(`Client Component`) mounts/renders it does not need to fetch that data by sending a web request to some endpoint.  Al the {#ff7100}(`Client Component`) is concerned with is displaying the comments that came in as props and display new ones. There is one caveat about all of this that is worth going over.  
+
+### The caveat
+
+When a comment is added a request is sent to an endpoint defined in the `NextJS` project.  When that `POST` request is successful it responds with the comment that is created.  That comment is saved to a state variable in the {#ff7100}(`useComments`) hook.  I noticed when adding a comment that the a new `GET` request for the blog page would fire (not sure what is triggering this).  This would sometimes cause the new comment to display twice, because the `GET` request would trigger the {#ff7100}(`Server Component`) to fetch comments from the database and pass them to the {#ff7100}(`Client Component`).  That is a race condition, and therefore this was not a 100% occurrence.  Until I figure out why the `GET` request is fired and how to prevent it, the current fix is to just de-dup the list.  That is what is happening in {#ff7100}(`merged_comments`) variable in the code above.  
+
+## Fin
+
+Exploring the new features of `NextJS` has been fun.  It is really cool how fast you can get a fullstack app up and running with the `NextJS`/`Prisma`/`PlanetScale` combo.  I do want to move on to a new thing for a little bit.  I want to start messing around with `Rust` a lot more.   Maybe spin up an rpc service in linode or something.  We shall see!  Anyways, we are coming close to the end of the year.  Hopefully next year we can afford a full tank of gas!
