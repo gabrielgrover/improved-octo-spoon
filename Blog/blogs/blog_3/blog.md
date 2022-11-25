@@ -10,7 +10,7 @@ Salutations to you and the great void you hail from!  I hope this `void log` fin
 
 The {green}([fp-ts](https://github.com/gcanti/fp-ts)) package is a library that gives you super functional programming powers in `TypeScript`.  Fold, Map, and Reduce to your heart's content.  All with great type inference and safety. {green}([Prisma](https://www.prisma.io/)) is basically an ORM.  Haven't used it before.  So far it has been pretty decent.  I haven't had to do anything complex with it though.  Let us take a look at our first function.
 
-## get_comments
+## get_comments {#get-comments}
 
 ```typescript
 export function get_comments(where?: Partial<Comment>) {
@@ -145,4 +145,4 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 ## Conclusion
 
-This was a very high level over view of a subset of `functional` programming concepts.  You can check out the {green}([repo](https://github.com/gabrielgrover/improved-octo-spoon)) for this project.  Clone it and take a look at some of the code we went over.  If you have an `IDE` with `TypeScript` support then you can look at how the type inference works with `fp-ts`.  Getting your hands dirty will help a lot.  The next void log we will be going over how to use the work we did and `NextJS` async components to render out comments stored in our database.  Flu season is here.  Becareful in your travels!
+This was a very high level over view of a subset of `functional` programming concepts.  You can check out the {green}([repo](https://github.com/gabrielgrover/improved-octo-spoon)) for this project.  Clone it and take a look at some of the code we went over.  If you have an `IDE` with `TypeScript` support then you can look at how the type inference works with `fp-ts`.  Getting your hands dirty will help a lot.  The next void log we will be going over how to use the above utility functions and `NextJS` async components to render out comments stored in our database.  Flu season is here.  Becareful in your travels!

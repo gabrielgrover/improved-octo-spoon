@@ -41,7 +41,7 @@ type BlogMeta = {
 };
 ```
 
-The meta data provides the content that is on the {blue}([Thoughts page](/thoughts)).  Before we go into that let's take a look at some helper functions that I created!
+The meta data provides the content that is on the {green}([Thoughts page](/thoughts)).  Before we go into that let's take a look at some helper functions that I created!
 
 ## Utilities
 
@@ -103,7 +103,7 @@ export function load_blog_html(blog_id: string) {
 }
 ```
 
-We are using the `load_mark_down_html` function defined above.  We need to construct the path to the markdown file to give to the `load_blog_html` function.  That path is the variable `path_to_blog`.  Examine it closesly and you will see that it matches the shape of the {blue}([directory structure](#directory-structure)).
+We are using the `load_mark_down_html` function defined above.  We need to construct the path to the markdown file to give to the `load_blog_html` function.  That path is the variable `path_to_blog`.  Examine it closesly and you will see that it matches the shape of the {green}([directory structure](#directory-structure)).
 
 ### list_blogs
 
@@ -131,12 +131,12 @@ export async function list_blogs(): Promise<BlogMeta[]> {
 }
 ```
 
-This function gets all the sub directories in the `Blog/blogs` directory, i.e `blog_1` and `blog_2`, then grabs the `meta.json` file in each of those directories.  Returning a {blue}([BlogMeta](#blog-meta)) array.
+This function gets all the sub directories in the `Blog/blogs` directory, i.e `blog_1` and `blog_2`, then grabs the `meta.json` file in each of those directories.  Returning a {green}([BlogMeta](#blog-meta)) array.
 
 
 ### Blog component
 
-We need to eventualy render the html that is returned from {blue}([load_blog_html](#load-blog-html)).  We simply make use of the `dangerouslySetInnerHTML` div property.  I know.  Very naughty... 
+We need to eventualy render the html that is returned from {green}([load_blog_html](#load-blog-html)).  We simply make use of the `dangerouslySetInnerHTML` div property.  I know.  Very naughty... 
 
 ```typescript
 import styles from "./styles.module.css";
