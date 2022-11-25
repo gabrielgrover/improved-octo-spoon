@@ -1,6 +1,6 @@
 # Async Rendering NextJS Server Components with fp-ts
 
-Greetings edge lord!  Hope your travels through the void have been filled with cringe hot takes and rug pulls.  Here, however, you will be seeing the approach I took to render comments on this site.  We will be referencing items covered in the last {#98c379}([`void log`](/blog/3)).  Read it if you wish.  This `void log` will stay high level.  Follow me.
+Greetings edge lord!  Hope your travels through the void have been filled with cringe hot takes and rug pulls.  Here, however, you will be seeing the approach I took to render comments on this site.  We will be referencing items covered in the last {#98c379}([`void log`](/blog/3)).  Read it if you wish.  This `void log` will stay high level.  Also, you can find all the code on {#98c379}([Github](https://github.com/gabrielgrover/improved-octo-spoon))!
 
 ## The NextJS Server Component {#server-component}
 
