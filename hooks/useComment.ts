@@ -7,12 +7,29 @@ import type { Comment } from "@prisma/client";
 import { BlogError } from "../utils/blog_err";
 import type { CommentInput } from "../apis/types";
 
-export const useComment = (token: string) => {
+export const useComment = (blog_id: number) => {
   const [add_comment_err, set_add_comment_err] = React.useState<
     BlogError | undefined
   >();
+  const [fetch_comments_err, set_fetch_comments_err] = React.useState<
+    BlogError | undefined
+  >();
+
   const [added_comments, set_comments] = React.useState<Comment[]>([]);
+  const [initial_comments, set_initial_comments] = React.useState<Comment[]>(
+    []
+  );
   const [loading, set_loading] = React.useState(false);
+
+  React.useEffect(() => {
+    F.pipe(
+      BlogRpc.get_comments(blog_id),
+      TE.fold(
+        (err) => T.of(set_fetch_comments_err(err)),
+        (cs) => T.of(set_initial_comments(cs))
+      )
+    )();
+  }, [set_initial_comments]);
 
   function add_comment(comment_input: CommentInput) {
     set_add_comment_err(undefined);
@@ -29,8 +46,11 @@ export const useComment = (token: string) => {
 
   return {
     add_comment,
-    add_comment_err,
-    added_comments,
+    comments: initial_comments.concat(added_comments),
     loading,
+    errors: {
+      add_comment_err,
+      fetch_comments_err,
+    },
   };
 };

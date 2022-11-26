@@ -20,7 +20,8 @@ export function add_comment(comment_input: CommentInput, token: string) {
   return post_comment_task;
 }
 
-export function get_comment(blog_id: number) {
+export function get_comments(blog_id: number) {
+  console.log({ blog_id });
   const get_comment_task = TE.tryCatch(
     () => fetch_comments(),
     (err) => err as BlogError
@@ -86,6 +87,8 @@ async function fetch_comments() {
       if (is_blog_err(data)) {
         return Promise.reject(data);
       }
+
+      console.log({ data });
 
       return [];
     })

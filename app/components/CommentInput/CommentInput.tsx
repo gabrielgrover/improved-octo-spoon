@@ -14,8 +14,7 @@ const useTheme = () => React.useContext(ThemeContext);
 
 type Props = {
   blog_id: number;
-  serialized_comments: SerializedComment[];
-  token: string;
+  //serialized_comments: SerializedComment[];
 };
 
 type SerializedComment = Omit<Comment, "createdAt" | "updatedAt"> & {
@@ -33,20 +32,18 @@ const eq_serialized_comment: EQ.Eq<SerializedComment> = {
 export const CommentInput: React.FC<Props> = (props) => {
   const { theme } = useTheme();
   const [content, set_content] = React.useState("");
-  const { add_comment, add_comment_err, added_comments, loading } = useComment(
-    props.token
-  );
+  const { add_comment, comments, errors, loading } = useComment(props.blog_id);
 
-  const merged_comments = F.pipe(
-    added_comments,
-    A.map((c) => ({
-      ...c,
-      createdAt: c.createdAt.getTime(),
-      updatedAt: c.updatedAt.getTime(),
-    })),
-    A.concat(props.serialized_comments),
-    A.uniq(eq_serialized_comment)
-  );
+  // const merged_comments = F.pipe(
+  //   added_comments,
+  //   A.map((c) => ({
+  //     ...c,
+  //     createdAt: c.createdAt.getTime(),
+  //     updatedAt: c.updatedAt.getTime(),
+  //   })),
+  //   A.concat(props.serialized_comments),
+  //   A.uniq(eq_serialized_comment)
+  // );
 
   const comment_input_styles =
     theme === "light" ? styles.comment_input_light : styles.comment_input_dark;
@@ -61,8 +58,12 @@ export const CommentInput: React.FC<Props> = (props) => {
           value={content}
         />
 
-        {add_comment_err && !loading && (
-          <BlogErrorMessage blog_err={add_comment_err} />
+        {errors.add_comment_err && !loading && (
+          <BlogErrorMessage blog_err={errors.add_comment_err} />
+        )}
+
+        {errors.fetch_comments_err && !loading && (
+          <BlogErrorMessage blog_err={errors.fetch_comments_err} />
         )}
 
         <SubmitCommentBtn
@@ -74,7 +75,7 @@ export const CommentInput: React.FC<Props> = (props) => {
         />
       </div>
 
-      <Comments comments={merged_comments} />
+      <Comments comments={comments} />
     </>
   );
 };
@@ -99,7 +100,7 @@ function SubmitCommentBtn(props: { loading: boolean; on_click: () => void }) {
   );
 }
 
-function Comments(props: { comments: SerializedComment[] }) {
+function Comments(props: { comments: Comment[] }) {
   return (
     <>
       {props.comments.length > 0 && (
