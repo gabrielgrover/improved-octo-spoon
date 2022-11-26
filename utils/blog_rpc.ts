@@ -2,7 +2,10 @@ import * as TE from "fp-ts/TaskEither";
 import * as F from "fp-ts/function";
 import { CommentInput } from "../apis/types";
 import { COMMENT_BASE_URL } from "./constants";
-import { is_comment_array, is_comment } from "../apis/comment_type_guards";
+import {
+  parse_comment_array,
+  parse_comment,
+} from "../apis/comment_type_guards";
 import {
   AddCommentError,
   GetCommentError,
@@ -49,13 +52,13 @@ async function post_comment(comment_input: CommentInput, token: string) {
         return Promise.reject(data);
       }
 
-      const comment = data?.comment;
+      const parse_result = parse_comment(data?.comment);
 
-      if (!is_comment(comment)) {
+      if (!parse_result.success) {
         return Promise.reject(UnrecognizedResponse("AddComment"));
       }
 
-      return comment;
+      return parse_result.data;
     })
     .catch((err) => {
       if (is_blog_err(err)) {
@@ -80,17 +83,18 @@ async function fetch_comments() {
     .then((resp) => resp.json())
     .then((data) => {
       const maybe_comments = data.comments;
-      if (is_comment_array(maybe_comments)) {
-        return maybe_comments;
-      }
 
       if (is_blog_err(data)) {
         return Promise.reject(data);
       }
 
-      console.log({ data });
+      const parse_result = parse_comment_array(maybe_comments);
 
-      return [];
+      if (!parse_result.success) {
+        return [];
+      }
+
+      return parse_result.data;
     })
     .catch((err) => {
       if (is_blog_err(err)) {

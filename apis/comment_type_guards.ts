@@ -1,30 +1,36 @@
-import * as S from "superstruct";
+import { z } from "zod";
 import { Comment } from "@prisma/client";
 
-const comment_validation = S.object({
-  id: S.number(),
-  content: S.string(),
-  blogId: S.number(),
-  updatedAt: S.date(),
-  createdAt: S.date(),
+const z_date = z.preprocess((arg) => {
+  if (typeof arg == "string" || arg instanceof Date) return new Date(arg);
+}, z.date());
+
+const zod_comment_validator = z.object({
+  id: z.number(),
+  content: z.string(),
+  blogId: z.number(),
+  updatedAt: z_date,
+  createdAt: z_date,
 });
 
-const comment_collection_validation = S.array(comment_validation);
+const zod_comment_array_validator = z.array(zod_comment_validator);
 
 export function is_comment(val: unknown): val is Comment {
-  const _val = val as Comment;
+  const { success } = zod_comment_validator.safeParse(val);
 
-  if (_val?.updatedAt) {
-    _val.updatedAt = new Date(_val.updatedAt);
-  }
-
-  if (_val?.createdAt) {
-    _val.createdAt = new Date(_val.createdAt);
-  }
-
-  return S.is(_val, comment_validation);
+  return success;
 }
 
 export function is_comment_array(val: unknown): val is Comment[] {
-  return S.is(val, comment_collection_validation);
+  const { success } = zod_comment_array_validator.safeParse(val);
+
+  return success;
+}
+
+export function parse_comment_array(val: unknown) {
+  return zod_comment_array_validator.safeParse(val);
+}
+
+export function parse_comment(val: unknown) {
+  return zod_comment_validator.safeParse(val);
 }

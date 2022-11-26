@@ -5,9 +5,15 @@ import * as TE from "fp-ts/TaskEither";
 import * as T from "fp-ts/Task";
 import type { Comment } from "@prisma/client";
 import { BlogError } from "../utils/blog_err";
+import * as CommentSort from "../utils/sort_comments";
 import type { CommentInput } from "../apis/types";
+import { TokenContext } from "../Providers/TokenProvider";
+
+const useToken = () => React.useContext(TokenContext);
 
 export const useComment = (blog_id: number) => {
+  const { token } = useToken();
+
   const [add_comment_err, set_add_comment_err] = React.useState<
     BlogError | undefined
   >();
@@ -20,6 +26,11 @@ export const useComment = (blog_id: number) => {
     []
   );
   const [loading, set_loading] = React.useState(false);
+
+  const comments = F.pipe(
+    initial_comments.concat(added_comments),
+    CommentSort.by_created_at_ascending
+  );
 
   React.useEffect(() => {
     F.pipe(
@@ -46,7 +57,7 @@ export const useComment = (blog_id: number) => {
 
   return {
     add_comment,
-    comments: initial_comments.concat(added_comments),
+    comments,
     loading,
     errors: {
       add_comment_err,

@@ -1,9 +1,6 @@
 "use client";
 import React from "react";
 import { Comment } from "@prisma/client";
-import * as A from "fp-ts/Array";
-import * as F from "fp-ts/function";
-import * as EQ from "fp-ts/Eq";
 import styles from "./comment.module.css";
 import { ThemeContext } from "../../../Providers/ThemeProvider";
 import { useComment } from "../../../hooks/useComment";
@@ -14,16 +11,6 @@ const useTheme = () => React.useContext(ThemeContext);
 
 type Props = {
   blog_id: number;
-  //serialized_comments: SerializedComment[];
-};
-
-type SerializedComment = Omit<Comment, "createdAt" | "updatedAt"> & {
-  createdAt: number;
-  updatedAt: number;
-};
-
-const eq_serialized_comment: EQ.Eq<SerializedComment> = {
-  equals: (c1, c2) => c1.id === c2.id,
 };
 
 /**
@@ -33,17 +20,6 @@ export const CommentInput: React.FC<Props> = (props) => {
   const { theme } = useTheme();
   const [content, set_content] = React.useState("");
   const { add_comment, comments, errors, loading } = useComment(props.blog_id);
-
-  // const merged_comments = F.pipe(
-  //   added_comments,
-  //   A.map((c) => ({
-  //     ...c,
-  //     createdAt: c.createdAt.getTime(),
-  //     updatedAt: c.updatedAt.getTime(),
-  //   })),
-  //   A.concat(props.serialized_comments),
-  //   A.uniq(eq_serialized_comment)
-  // );
 
   const comment_input_styles =
     theme === "light" ? styles.comment_input_light : styles.comment_input_dark;

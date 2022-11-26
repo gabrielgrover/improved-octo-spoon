@@ -30,7 +30,8 @@
     "react-dom": "18.2.0",
     "react-query": "^3.39.2",
     "superstruct": "^0.16.7",
-    "voidlog_cli": "^0.0.8"
+    "voidlog_cli": "^0.0.8",
+    "zod": "^3.19.1"
   },
   "devDependencies": {
     "@types/inquirer": "^9.0.2",
