@@ -7,7 +7,7 @@ import type { Comment } from "@prisma/client";
 import { BlogError } from "../utils/blog_err";
 import type { CommentInput } from "../apis/types";
 
-export const useComment = () => {
+export const useComment = (token: string) => {
   const [add_comment_err, set_add_comment_err] = React.useState<
     BlogError | undefined
   >();
@@ -18,7 +18,7 @@ export const useComment = () => {
     set_add_comment_err(undefined);
     set_loading(true);
     F.pipe(
-      BlogRpc.add_comment(comment_input),
+      BlogRpc.add_comment(comment_input, token),
       TE.fold(
         (err) => T.of(set_add_comment_err(err)),
         (c) => T.of(set_comments((prev) => [c, ...prev]))

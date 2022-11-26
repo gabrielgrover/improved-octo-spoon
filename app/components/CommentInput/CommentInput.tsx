@@ -15,6 +15,7 @@ const useTheme = () => React.useContext(ThemeContext);
 type Props = {
   blog_id: number;
   serialized_comments: SerializedComment[];
+  token: string;
 };
 
 type SerializedComment = Omit<Comment, "createdAt" | "updatedAt"> & {
@@ -32,8 +33,9 @@ const eq_serialized_comment: EQ.Eq<SerializedComment> = {
 export const CommentInput: React.FC<Props> = (props) => {
   const { theme } = useTheme();
   const [content, set_content] = React.useState("");
-  const { add_comment, add_comment_err, added_comments, loading } =
-    useComment();
+  const { add_comment, add_comment_err, added_comments, loading } = useComment(
+    props.token
+  );
 
   const merged_comments = F.pipe(
     added_comments,

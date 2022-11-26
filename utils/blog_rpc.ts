@@ -11,13 +11,9 @@ import {
   UnrecognizedResponse,
 } from "./blog_err";
 
-const headers = new Headers({
-  "Content-Type": "application/json",
-});
-
-export function add_comment(comment_input: CommentInput) {
+export function add_comment(comment_input: CommentInput, token: string) {
   const post_comment_task = TE.tryCatch(
-    () => post_comment(comment_input),
+    () => post_comment(comment_input, token),
     (err) => err as BlogError
   );
 
@@ -36,10 +32,14 @@ export function get_comment(blog_id: number) {
   );
 }
 
-async function post_comment(comment_input: CommentInput) {
+async function post_comment(comment_input: CommentInput, token: string) {
+  const headers = new Headers({
+    "Content-Type": "application/json",
+  });
+
   return fetch(COMMENT_BASE_URL, {
     method: "POST",
-    body: JSON.stringify(comment_input),
+    body: JSON.stringify({ comment_input, token }),
     headers,
   })
     .then((resp) => resp.json())
@@ -71,6 +71,10 @@ async function post_comment(comment_input: CommentInput) {
 }
 
 async function fetch_comments() {
+  const headers = new Headers({
+    "Content-Type": "application/json",
+  });
+
   return fetch(COMMENT_BASE_URL, { headers })
     .then((resp) => resp.json())
     .then((data) => {
