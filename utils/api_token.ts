@@ -13,7 +13,7 @@ export function generate_api_token() {
 
   const token = jwt.sign(
     {
-      exp: Math.floor(Date.now() / 1000) + 60 * 60,
+      exp: Math.floor(Date.now() / 1000) + 20,
     },
     api_key
   );

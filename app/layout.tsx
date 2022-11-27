@@ -23,6 +23,7 @@ export default function RootLayout({
         return err_comp;
       },
       (token) => {
+        console.log({ fetched_token_for_provider: token });
         const provider: React.FC<
           React.PropsWithChildren<Record<string, unknown>>
         > = (props) => (
