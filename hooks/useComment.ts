@@ -14,6 +14,8 @@ const useToken = () => React.useContext(TokenContext);
 export const useComment = (blog_id: number) => {
   const { token } = useToken();
 
+  console.log({ token });
+
   const [add_comment_err, set_add_comment_err] = React.useState<
     BlogError | undefined
   >();
