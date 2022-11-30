@@ -5,8 +5,6 @@ import { check_api_token } from "./api_token";
 
 type Handler = (req: NextApiRequest, res: NextApiResponse) => void;
 
-//export function middleware_pipe(...handlers: Handler[]) {}
-
 export function api_token_middleware(method: "GET" | "POST") {
   return (handler: Handler) => {
     return (req: NextApiRequest, res: NextApiResponse) => {

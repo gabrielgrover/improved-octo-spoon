@@ -24,7 +24,6 @@ export function add_comment(comment_input: CommentInput, token: string) {
 }
 
 export function get_comments(blog_id: number) {
-  console.log({ blog_id });
   const get_comment_task = TE.tryCatch(
     () => fetch_comments(),
     (err) => err as BlogError

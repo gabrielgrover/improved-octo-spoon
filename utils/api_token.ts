@@ -7,18 +7,7 @@ const api_key = process.env["API_SECRET_KEY"];
 type JWTError = Pick<jwt.JsonWebTokenError, "name" | "message">;
 
 export function generate_api_token() {
-  if (!api_key) {
-    return E.left(TokenSignFailedError("env var not available"));
-  }
-
-  const token = jwt.sign(
-    {
-      exp: Math.floor(Date.now() / 1000) + 20,
-    },
-    api_key
-  );
-
-  return E.right(token);
+  return token(Math.floor(Date.now() / 1000) + 60 * 60);
 }
 
 export function check_api_token(token: string) {
@@ -40,4 +29,19 @@ export function check_api_token(token: string) {
       return TokenVerificationError(err.message);
     }
   );
+}
+
+function token(expiry: number) {
+  if (!api_key) {
+    return E.left(TokenSignFailedError("env var not available"));
+  }
+
+  const token = jwt.sign(
+    {
+      exp: expiry,
+    },
+    api_key
+  );
+
+  return E.right(token);
 }
