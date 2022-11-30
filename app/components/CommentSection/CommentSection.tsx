@@ -8,7 +8,8 @@ type Props = {
   blog_id: string;
 };
 
-export const revalidate = 0;
+//export const revalidate = 0;
+export const dynamic = "force dynamic";
 
 export const CommentSection: React.FC<Props> = (props) => {
   const api_token = F.pipe(
