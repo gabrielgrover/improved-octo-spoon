@@ -7,6 +7,8 @@ import { BlogErrorMessage } from "./components/BlogErrorMessage/BlogErrorMessage
 import { TokenProvider } from "../Providers/TokenProvider";
 import { generate_api_token } from "../utils/api_token";
 
+export const revalidate = 0;
+
 export default function RootLayout({
   children,
 }: {
