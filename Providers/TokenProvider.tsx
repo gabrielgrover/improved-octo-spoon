@@ -14,6 +14,8 @@ export type TokenProviderProps = React.PropsWithChildren<{
 }>;
 
 export const TokenProvider: React.FC<TokenProviderProps> = (props) => {
+  //console.log({ token_from_provider: props.token });
+
   return (
     <TokenContext.Provider
       value={{

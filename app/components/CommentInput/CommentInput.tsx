@@ -11,6 +11,7 @@ const useTheme = () => React.useContext(ThemeContext);
 
 type Props = {
   blog_id: number;
+  token: string;
 };
 
 /**
@@ -45,7 +46,7 @@ export const CommentInput: React.FC<Props> = (props) => {
         <SubmitCommentBtn
           loading={loading}
           on_click={() => {
-            add_comment({ content, blogId: props.blog_id });
+            add_comment({ content, blogId: props.blog_id }, props.token);
             set_content("");
           }}
         />

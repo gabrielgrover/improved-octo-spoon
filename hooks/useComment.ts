@@ -7,15 +7,8 @@ import type { Comment } from "@prisma/client";
 import { BlogError } from "../utils/blog_err";
 import * as CommentSort from "../utils/sort_comments";
 import type { CommentInput } from "../apis/types";
-import { TokenContext } from "../Providers/TokenProvider";
-
-const useToken = () => React.useContext(TokenContext);
 
 export const useComment = (blog_id: number) => {
-  const { token } = useToken();
-
-  console.log({ token_in_use_comment: token });
-
   const [add_comment_err, set_add_comment_err] = React.useState<
     BlogError | undefined
   >();
@@ -44,7 +37,7 @@ export const useComment = (blog_id: number) => {
     )();
   }, [set_initial_comments]);
 
-  function add_comment(comment_input: CommentInput) {
+  function add_comment(comment_input: CommentInput, token: string) {
     set_add_comment_err(undefined);
     set_loading(true);
     F.pipe(

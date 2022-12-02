@@ -17,7 +17,7 @@ const BlogPage = async (props: Props) => {
   const { slug } = props.params;
   const html = await load_blog_html(slug);
 
-  const comment_section = F.pipe(
+  const MaybeCommentSection = F.pipe(
     generate_api_token(),
     E.fold(
       (blog_err) => <BlogErrorMessage blog_err={blog_err} />,
@@ -28,7 +28,7 @@ const BlogPage = async (props: Props) => {
   return (
     <div className={styles.container}>
       <Blog html={html} />
-      {comment_section}
+      <MaybeCommentSection />
     </div>
   );
 };
