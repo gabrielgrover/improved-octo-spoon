@@ -11,7 +11,7 @@ type Props = {
   params: { slug: string };
 };
 
-export const revalidate = 0;
+//export const revalidate = 0;
 
 const BlogPage = async (props: Props) => {
   const { slug } = props.params;
