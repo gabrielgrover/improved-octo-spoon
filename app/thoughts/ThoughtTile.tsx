@@ -11,7 +11,7 @@ type Props = {
 export function ThoughtTile(props: Props) {
   return (
     <div className={styles.ThoughtTile}>
-      <Link className={styles.LinkText} href={props.url_path}>
+      <Link className={styles.LinkText} href={props.url_path} prefetch={false}>
         {props.title}
       </Link>
       <div className={styles.Description}>{props.description}</div>
