@@ -7,7 +7,7 @@ type Props = {
   params: { slug: string };
 };
 
-export const dynamic = "force-dynamic";
+//export const dynamic = "force-dynamic";
 
 const BlogPage = async (props: Props) => {
   const { slug } = props.params;

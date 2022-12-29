@@ -1,16 +1,17 @@
 "use client";
 import React from "react";
+import * as O from "fp-ts/Option";
 
 type TokenProviderContextType = {
-  token: string;
+  token: O.Option<string>;
 };
 
 export const TokenContext = React.createContext<TokenProviderContextType>({
-  token: "",
+  token: O.none,
 });
 
 export type TokenProviderProps = React.PropsWithChildren<{
-  token: string;
+  token: O.Option<string>;
 }>;
 
 export const TokenProvider: React.FC<TokenProviderProps> = (props) => {

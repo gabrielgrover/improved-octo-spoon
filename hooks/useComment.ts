@@ -3,12 +3,17 @@ import * as BlogRpc from "../utils/blog_rpc";
 import * as F from "fp-ts/function";
 import * as TE from "fp-ts/TaskEither";
 import * as T from "fp-ts/Task";
+import * as O from "fp-ts/Option";
 import type { Comment } from "@prisma/client";
-import { BlogError } from "../utils/blog_err";
+import { BlogError, AddCommentError } from "../utils/blog_err";
 import * as CommentSort from "../utils/sort_comments";
 import type { CommentInput } from "../apis/types";
+import { TokenContext } from "../Providers/TokenProvider";
+
+const useToken = () => React.useContext(TokenContext);
 
 export const useComment = (blog_id: number) => {
+  const { token } = useToken();
   const [add_comment_err, set_add_comment_err] = React.useState<
     BlogError | undefined
   >();
@@ -37,11 +42,28 @@ export const useComment = (blog_id: number) => {
     )();
   }, [set_initial_comments]);
 
-  function add_comment(comment_input: CommentInput, token: string) {
+  console.log(
+    "token",
+    F.pipe(
+      token,
+      O.fold(
+        () => {},
+        (token) => console.log({ token })
+      )
+    )
+  );
+
+  function add_comment(comment_input: CommentInput, _token: string) {
     set_add_comment_err(undefined);
     set_loading(true);
+
     F.pipe(
-      BlogRpc.add_comment(comment_input, token),
+      token,
+      O.fold(
+        () => TE.left(AddCommentError("Token not available.")),
+        (token) => BlogRpc.add_comment(comment_input, token)
+      ),
+      //(token: string) => BlogRpc.add_comment(comment_input, token),
       TE.fold(
         (err) => T.of(set_add_comment_err(err)),
         (c) => T.of(set_comments((prev) => [c, ...prev]))

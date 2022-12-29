@@ -25,7 +25,7 @@ export const CommentInput: React.FC<Props> = (props) => {
   const comment_input_styles =
     theme === "light" ? styles.comment_input_light : styles.comment_input_dark;
 
-  console.log("token: ", props.token);
+  //console.log("token: ", props.token);
 
   return (
     <>
