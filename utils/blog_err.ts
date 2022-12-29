@@ -14,6 +14,7 @@ export enum BlogErrorType {
   PrismaClientUnavailable = "PrismaClientUnavailable",
   Unknown = "Unknown",
   UnrecognizedResponse = "UnrecognizedResponse",
+  TokenFailure = "TokenFailure",
 }
 
 export const AddCommentError = (
@@ -69,3 +70,13 @@ export function is_blog_err(val: unknown): val is BlogError {
 
   return false;
 }
+
+export const TokenSignFailedError = (reason: string): BlogError => ({
+  type: BlogErrorType.TokenFailure,
+  message: `Failed to sign token: ${reason}`,
+});
+
+export const TokenVerificationError = (reason: string): BlogError => ({
+  type: BlogErrorType.TokenFailure,
+  message: `Failed to verify token: ${reason}`,
+});

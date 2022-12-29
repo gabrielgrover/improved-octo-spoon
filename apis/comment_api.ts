@@ -4,8 +4,6 @@ import * as S from "superstruct";
 import * as TE from "fp-ts/TaskEither";
 import * as E from "fp-ts/Either";
 import * as F from "fp-ts/function";
-import * as A from "fp-ts/Array";
-import { Ord, fromCompare, contramap } from "fp-ts/Ord";
 import {
   AddCommentError,
   GetCommentError,
@@ -37,18 +35,6 @@ export function get_comments(where?: Partial<Comment>) {
     });
 
   return TE.tryCatch(find, create_err);
-}
-
-const ord_number: Ord<number> = fromCompare((x, y) =>
-  x < y ? 1 : x > y ? -1 : 0
-);
-
-const by_created: Ord<Comment> = contramap((c: Comment) =>
-  c.createdAt.getTime()
-)(ord_number);
-
-export function sort_comments_by_created_at(cs: Comment[]) {
-  return A.sortBy([by_created])(cs);
 }
 
 // Private functions

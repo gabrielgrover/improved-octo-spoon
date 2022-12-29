@@ -2,7 +2,10 @@ import * as TE from "fp-ts/TaskEither";
 import * as F from "fp-ts/function";
 import { CommentInput } from "../apis/types";
 import { COMMENT_BASE_URL } from "./constants";
-import { is_comment_array, is_comment } from "../apis/comment_type_guards";
+import {
+  parse_comment_array,
+  parse_comment,
+} from "../apis/comment_type_guards";
 import {
   AddCommentError,
   GetCommentError,
@@ -11,20 +14,16 @@ import {
   UnrecognizedResponse,
 } from "./blog_err";
 
-const headers = new Headers({
-  "Content-Type": "application/json",
-});
-
-export function add_comment(comment_input: CommentInput) {
+export function add_comment(comment_input: CommentInput, token: string) {
   const post_comment_task = TE.tryCatch(
-    () => post_comment(comment_input),
+    () => post_comment(comment_input, token),
     (err) => err as BlogError
   );
 
   return post_comment_task;
 }
 
-export function get_comment(blog_id: number) {
+export function get_comments(blog_id: number) {
   const get_comment_task = TE.tryCatch(
     () => fetch_comments(),
     (err) => err as BlogError
@@ -36,10 +35,14 @@ export function get_comment(blog_id: number) {
   );
 }
 
-async function post_comment(comment_input: CommentInput) {
+async function post_comment(comment_input: CommentInput, token: string) {
+  const headers = new Headers({
+    "Content-Type": "application/json",
+  });
+
   return fetch(COMMENT_BASE_URL, {
     method: "POST",
-    body: JSON.stringify(comment_input),
+    body: JSON.stringify({ comment_input, token }),
     headers,
   })
     .then((resp) => resp.json())
@@ -48,13 +51,13 @@ async function post_comment(comment_input: CommentInput) {
         return Promise.reject(data);
       }
 
-      const comment = data?.comment;
+      const parse_result = parse_comment(data?.comment);
 
-      if (!is_comment(comment)) {
+      if (!parse_result.success) {
         return Promise.reject(UnrecognizedResponse("AddComment"));
       }
 
-      return comment;
+      return parse_result.data;
     })
     .catch((err) => {
       if (is_blog_err(err)) {
@@ -71,19 +74,26 @@ async function post_comment(comment_input: CommentInput) {
 }
 
 async function fetch_comments() {
+  const headers = new Headers({
+    "Content-Type": "application/json",
+  });
+
   return fetch(COMMENT_BASE_URL, { headers })
     .then((resp) => resp.json())
     .then((data) => {
       const maybe_comments = data.comments;
-      if (is_comment_array(maybe_comments)) {
-        return maybe_comments;
-      }
 
       if (is_blog_err(data)) {
         return Promise.reject(data);
       }
 
-      return [];
+      const parse_result = parse_comment_array(maybe_comments);
+
+      if (!parse_result.success) {
+        return [];
+      }
+
+      return parse_result.data;
     })
     .catch((err) => {
       if (is_blog_err(err)) {
