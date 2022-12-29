@@ -1,8 +1,11 @@
 import { readFile, readdir } from "fs/promises";
 import { BlogMeta } from "../Blog/types";
 import { load_mark_down_html } from "../Blog/mark_down_loader";
+import path from "path";
 
-export const BLOGS_DIR = "Blog/blogs";
+const cwd = process.cwd();
+
+export const BLOGS_DIR = path.join(cwd, "Blog/blogs");
 
 export function load_blog_html(blog_id: string) {
   const path_to_blog = `${BLOGS_DIR}/blog_${blog_id}/blog.md`;
