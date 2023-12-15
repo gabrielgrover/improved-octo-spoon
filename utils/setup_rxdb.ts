@@ -1,6 +1,6 @@
 "use client";
 import {
-  addRxPlugin,
+  //addRxPlugin,
   createRxDatabase,
   toTypedRxJsonSchema,
   ExtractDocumentTypeFromTypedRxJsonSchema,
@@ -8,10 +8,10 @@ import {
   RxDatabase,
 } from "rxdb";
 import { replicateCouchDB } from "rxdb/plugins/replication-couchdb";
-import { RxDBDevModePlugin } from "rxdb/plugins/dev-mode";
+//import { RxDBDevModePlugin } from "rxdb/plugins/dev-mode";
 import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
 
-addRxPlugin(RxDBDevModePlugin);
+//addRxPlugin(RxDBDevModePlugin);
 
 const COMMENTS_DB_URL = process.env["NEXT_PUBLIC_COMMENTS_DB_URL"];
 

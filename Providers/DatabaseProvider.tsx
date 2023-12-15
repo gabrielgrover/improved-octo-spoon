@@ -21,8 +21,6 @@ export const DatabaseProvider: React.FC<React.PropsWithChildren> = (props) => {
       O.getOrElse(() => "")
     );
 
-    console.log("TOKEN: ", token);
-
     setup_rxdb(token).then(set_blog_db).catch(console.error);
   }, [set_blog_db, maybe_token]);
 
