@@ -8,9 +8,7 @@ import type { Comment } from "@prisma/client";
 import { BlogError, AddCommentError } from "../utils/blog_err";
 import * as CommentSort from "../utils/sort_comments";
 import type { CommentInput } from "../apis/types";
-import { TokenContext } from "../Providers/TokenProvider";
-
-const useToken = () => React.useContext(TokenContext);
+import { useToken } from "../Providers/TokenProvider";
 
 export const useComment = (blog_id: number) => {
   const { token } = useToken();
@@ -63,7 +61,6 @@ export const useComment = (blog_id: number) => {
         () => TE.left(AddCommentError("Token not available.")),
         (token) => BlogRpc.add_comment(comment_input, token)
       ),
-      //(token: string) => BlogRpc.add_comment(comment_input, token),
       TE.fold(
         (err) => T.of(set_add_comment_err(err)),
         (c) => T.of(set_comments((prev) => [c, ...prev]))

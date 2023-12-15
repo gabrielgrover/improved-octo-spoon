@@ -15,6 +15,7 @@ export enum BlogErrorType {
   Unknown = "Unknown",
   UnrecognizedResponse = "UnrecognizedResponse",
   TokenFailure = "TokenFailure",
+  DatabaseInitFailed = "DatabaseInitFailed",
 }
 
 export const AddCommentError = (
@@ -24,6 +25,11 @@ export const AddCommentError = (
   message,
   ext_lib,
   type: BlogErrorType.AddCommentFailed,
+});
+
+export const DatabaseInitError = (): BlogError => ({
+  message: "Database failed to initialize",
+  type: BlogErrorType.DatabaseInitFailed,
 });
 
 export const GetCommentError = (

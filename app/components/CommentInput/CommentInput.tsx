@@ -1,11 +1,10 @@
 "use client";
 import React from "react";
-import { Comment } from "@prisma/client";
 import styles from "./comment.module.css";
 import { ThemeContext } from "../../../Providers/ThemeProvider";
-import { useComment } from "../../../hooks/useComment";
 import { CommentCard } from "../CommentCard/CommentCard";
 import { BlogErrorMessage } from "../BlogErrorMessage/BlogErrorMessage";
+import { Comment, useRxComments } from "../../../hooks/useRxComments";
 
 const useTheme = () => React.useContext(ThemeContext);
 
@@ -20,12 +19,11 @@ type Props = {
 export const CommentInput: React.FC<Props> = (props) => {
   const { theme } = useTheme();
   const [content, set_content] = React.useState("");
-  const { add_comment, comments, errors, loading } = useComment(props.blog_id);
-
+  const { add_comment, comments, error, loading } = useRxComments(
+    props.blog_id
+  );
   const comment_input_styles =
     theme === "light" ? styles.comment_input_light : styles.comment_input_dark;
-
-  //console.log("token: ", props.token);
 
   return (
     <>
@@ -37,18 +35,12 @@ export const CommentInput: React.FC<Props> = (props) => {
           value={content}
         />
 
-        {errors.add_comment_err && !loading && (
-          <BlogErrorMessage blog_err={errors.add_comment_err} />
-        )}
-
-        {errors.fetch_comments_err && !loading && (
-          <BlogErrorMessage blog_err={errors.fetch_comments_err} />
-        )}
+        {error ? <BlogErrorMessage blog_err={error} /> : null}
 
         <SubmitCommentBtn
           loading={loading}
           on_click={() => {
-            add_comment({ content, blogId: props.blog_id }, props.token);
+            add_comment(content);
             set_content("");
           }}
         />

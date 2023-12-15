@@ -6,6 +6,7 @@ import { Navbar } from "./components/Navbar/Navbar";
 import { ThemeProvider } from "../Providers/ThemeProvider";
 import { TokenProvider } from "../Providers/TokenProvider";
 import { generate_api_token } from "../utils/api_token";
+import { DatabaseProvider } from "../Providers/DatabaseProvider";
 
 export const dynamic = "force-dynamic";
 
@@ -34,10 +35,12 @@ export default function RootLayout({
 
       <body>
         <TokenProvider token={maybe_token}>
-          <ThemeProvider>
-            <Navbar />
-            {children}
-          </ThemeProvider>
+          <DatabaseProvider>
+            <ThemeProvider>
+              <Navbar />
+              {children}
+            </ThemeProvider>
+          </DatabaseProvider>
         </TokenProvider>
       </body>
     </html>
