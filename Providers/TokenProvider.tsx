@@ -27,3 +27,5 @@ export const TokenProvider: React.FC<TokenProviderProps> = (props) => {
     </TokenContext.Provider>
   );
 };
+
+export const useToken = () => React.useContext(TokenContext);

@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import * as E from "fp-ts/Either";
 import { TokenSignFailedError, TokenVerificationError } from "./blog_err";
+import base64 from "base-64";
 
 const api_key = process.env["API_SECRET_KEY"];
 
@@ -39,8 +40,13 @@ function token(expiry: number) {
   const token = jwt.sign(
     {
       exp: expiry,
+      sub: "user_002",
+      roles: ["user"],
     },
-    api_key
+    base64.decode(api_key),
+    {
+      algorithm: "HS256",
+    }
   );
 
   return E.right(token);
