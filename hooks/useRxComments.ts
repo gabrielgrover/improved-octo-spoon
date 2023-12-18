@@ -1,3 +1,4 @@
+"use client";
 import { Comment } from "../utils/setup_rxdb";
 import { BlogError, AddCommentError, GetCommentError } from "../utils/blog_err";
 import React from "react";
