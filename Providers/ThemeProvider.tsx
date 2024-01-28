@@ -9,7 +9,7 @@ type ThemeProviderContextType = {
 const VOID_LOG_THEME = "VOID_LOG_THEME";
 
 export const ThemeContext = React.createContext<ThemeProviderContextType>({
-  theme: "light",
+  theme: "dark",
   toggle_theme: () => {},
 });
 
