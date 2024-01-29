@@ -126,4 +126,4 @@ You can see the use of the `store_encrypted` method mentioned earlier.  The `enc
 
 ## Fin
 
-This was light intro into some of the primitives I had to write to get a basic document store for the `fizzgig` app.  Next time we will go over how this is integrated into the `tauri` framework in order to trigger read / write to the document store from the client.  
+This was light intro into some of the primitives I had to write to get a basic document store for the `fizzgig` app.  Next time we will go over how this is integrated into the `tauri` framework in order to trigger reads / writes to the document store from the client.  
