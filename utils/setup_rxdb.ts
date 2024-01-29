@@ -15,7 +15,7 @@ import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
 
 const COMMENTS_DB_URL =
   process.env["NEXT_PUBLIC_COMMENTS_DB_URL"] ??
-  "http://golsim.live:5984/comments_dev/";
+  "https://golsim.live:6984/comments_dev/";
 
 export async function setup_rxdb(token: string) {
   const db = await createRxDatabase<BlogDatabase>({
