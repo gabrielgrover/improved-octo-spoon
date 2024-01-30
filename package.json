@@ -8,8 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "NODE_ENV=test jest",
-    "blog:create": "EDITOR=vim BLOGS_DIR=/Blog/blogs yarn voidlog_cli create",
-    "blog:edit": "EDITOR=vim BLOGS_DIR=/Blog/blogs yarn voidlog_cli edit",
+    "blog:create": "BLOGS_DIR=/Blog/blogs yarn voidlog_cli create",
     "planetscale:push:dev": "dotenv -e .env.dev yarn prisma db push",
     "prisma:generate-types": "yarn prisma generate",
     "postinstall": "echo noop"
@@ -34,7 +33,7 @@
     "rxjs": "^7.8.1",
     "superstruct": "^0.16.7",
     "uuid": "^9.0.1",
-    "voidlog_cli": "^0.0.8",
+    "voidlog_cli": "^0.0.9",
     "zod": "^3.19.1"
   },
   "devDependencies": {
