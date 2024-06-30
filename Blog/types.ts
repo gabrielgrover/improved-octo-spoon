@@ -4,4 +4,5 @@ export type BlogMeta = {
   id: number;
   created_at: number;
   updated_at: number;
+  hidden?: boolean;
 };

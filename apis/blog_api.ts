@@ -26,7 +26,7 @@ export async function list_blogs(): Promise<BlogMeta[]> {
     )
   );
 
-  return blogs;
+  return blogs.filter((m) => !m.hidden);
 }
 
 export async function get_all_blog_html() {
