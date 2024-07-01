@@ -1,7 +1,7 @@
 import { Blog } from "../../../Blog";
 import { load_blog_html, list_blogs } from "../../../apis/blog_api";
 import styles from "./blog_page_styles.module.css";
-import { CommentSection } from "../../components/CommentSection";
+//import { CommentSection } from "../../components/CommentSection";
 
 type Props = {
   params: { slug: string };
@@ -14,7 +14,10 @@ const BlogPage = async (props: Props) => {
   return (
     <div className={styles.container}>
       <Blog html={html} />
-      <CommentSection blog_id={slug} />
+      {/*
+        Disabling comments for now.  Until we have moderation set up
+        <CommentSection blog_id={slug} />
+     */}
     </div>
   );
 };
